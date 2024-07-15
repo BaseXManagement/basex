@@ -1,0 +1,15 @@
+# dependencies
+/frontend/node_modules
+/backend/.idea
+/.pnp
+.pnp.js
+
+# production
+frontend/build
+backend/target
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
