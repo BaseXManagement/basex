@@ -1,1 +1,1 @@
-# basex
+# Base-X project

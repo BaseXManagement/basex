@@ -1,12 +1,12 @@
 # dependencies
-/frontend/node_modules
-/backend/.idea
+/client/node_modules
+/java_api/.idea
 /.pnp
 .pnp.js
 
 # production
-frontend/build
-backend/target
+client/build
+java_api/target
 
 ### VS Code ###
 .vscode/
