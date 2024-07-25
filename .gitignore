@@ -1,0 +1,15 @@
+# dependencies
+/client/node_modules
+/java_api/.idea
+/.pnp
+.pnp.js
+
+# production
+client/build
+java_api/target
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
