@@ -1,7 +1,11 @@
-version: '3'
+########################################################################################################################
+#   1) FILE CONFIG - GLOBAL: DATABASE OUTSIDE DOCKER CONTAINER
+# * mvn clean install
+# * `docker-compose up --build -d` (create/start containers)
+# * to perm delete DB we need to delete docker + its volumes: 'docker-compose down -v'
+########################################################################################################################
 
 services:
-# <--! To have the database in Docker only, uncomment all lines related to netwrks and its child + remove     volumes: and - db:/var/lib/mysql -->
   basex-api-app:
     build: .                          # Use Dockerfile to build image
     image: basex-api:latest      # Name of the resulting image
@@ -11,8 +15,6 @@ services:
     depends_on:                       # Service(s) that this service depends on:
       basex-api-db:
           condition: service_healthy
-#    networks:                         # Local network for services (containers)
-#      - network
 
   basex-api-db:
     image: mysql:latest               # Image used to create container (from Docker registry)
@@ -29,10 +31,39 @@ services:
 
 volumes:
   db:                                  # This defines the 'db' volume used by the database container
+
+
+########################################################################################################################
+#   2) FILE CONFIG - GLOBAL: DATABASE CONTAINED IN DOCKER CONTAINER ONLY, and accessed via Docker Cont. only
+# * mvn clean install
+# * `docker-compose up --build -d` (create/start containers)
+########################################################################################################################
+
+#services:
+#
+#  basex-api-app:
+#    build: .                          # Use Dockerfile to build image
+#    image: basex-api:latest      # Name of the resulting image
+#    container_name: applicationContainer       # Name of the resulting container
+#    ports:                            # External/internal port mapping:
+#      - 8080:8080
+#    depends_on:                       # Service(s) that this service depends on:
+#      basex-api-db:
+#        condition: service_healthy
+#    networks:                         # Local network for services (containers)
+#      - network
+#
+#  basex-api-db:
+#    image: mysql:latest               # Image used to create container (from Docker registry)
+#    container_name: databaseContainer
+#    environment:                      # Environment variables for the service (container):
+#      - MYSQL_ROOT_PASSWORD=password
+#      - MYSQL_DATABASE=basex
+#    healthcheck:                      # Command that, when ran, proves service (container) is healthy
+#      test: [ "CMD", "echo", "MySQL database container is healthy" ]
 #    networks:
 #      - network
 #
 #networks:
-#
 #  network:
 #    driver: bridge

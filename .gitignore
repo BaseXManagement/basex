@@ -13,3 +13,6 @@ java_api/target
 
 ### Mac OS ###
 .DS_Store
+
+###Target###
+/java_api/target
