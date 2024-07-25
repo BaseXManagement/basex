@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+# <--! To have the database in Docker only, uncomment all lines related to netwrks and its child + remove     volumes: and - db:/var/lib/mysql -->
+  basex-api-app:
+    build: .                          # Use Dockerfile to build image
+    image: basex-api:latest      # Name of the resulting image
+    container_name: application       # Name of the resulting container
+    ports:                            # External/internal port mapping:
+      - 8080:8080
+    depends_on:                       # Service(s) that this service depends on:
+      basex-api-db:
+          condition: service_healthy
+#    networks:                         # Local network for services (containers)
+#      - network
+
+  basex-api-db:
+    image: mysql:latest               # Image used to create container (from Docker registry)
+    container_name: database
+    environment:                      # Environment variables for the service (container):
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=basex
+    healthcheck:                      # Command that, when ran, proves service (container) is healthy
+      test: [ "CMD", "echo", "MySQL database container is healthy" ]
+    ports:
+      - "3306:3306"
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  db:                                  # This defines the 'db' volume used by the database container
+#    networks:
+#      - network
+#
+#networks:
+#
+#  network:
+#    driver: bridge
