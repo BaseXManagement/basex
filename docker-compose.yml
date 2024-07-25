@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-
+# <--! To have the database in Docker only, uncomment all lines related to netwrks and its child + remove     volumes: and - db:/var/lib/mysql -->
   basex-api-app:
     build: .                          # Use Dockerfile to build image
     image: basex-api:latest      # Name of the resulting image
