@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
-import { Box } from '@mui/material';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
@@ -15,6 +14,7 @@ import SiteReports from './pages/SiteReports';
 import { useAuthStore } from './stores/authStore';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
+import { Box } from '@mui/material';
 
 const App: React.FC = () => {
   return (
