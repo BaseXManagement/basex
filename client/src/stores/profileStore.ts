@@ -1,4 +1,4 @@
-import create from 'zustand';
+import {create} from 'zustand';
 import { profileService } from '../services/profileService';
 
 interface ProfileState {

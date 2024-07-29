@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Typography, Box, Grid, Paper, Button, Avatar } from '@mui/material';
+import { Container, Typography, Box, Grid, Paper, Avatar, Button } from '@mui/material';
 import { useProfile } from '../../../hooks/useProfile';
 import { useAuthStore } from '../../../stores/authStore';
 import { useNavigate } from 'react-router-dom';
