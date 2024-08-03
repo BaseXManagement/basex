@@ -24,8 +24,6 @@ const registerUser = async (req: Request, res: Response) => {
   await profile.save();
 
   res.status(201).json({
-    _id: user._id,
-    email: user.email,
     token: generateToken(user.id.toString()),
   });
 };
@@ -37,8 +35,6 @@ const authUser = async (req: Request, res: Response) => {
 
   if (user && (await user.matchPassword(password))) {
     res.json({
-      _id: user._id,
-      email: user.email,
       token: generateToken(user.id.toString()),
     });
   } else {

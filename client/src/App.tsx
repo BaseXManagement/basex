@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes, Navigate, Outlet } from 'react-router-dom';
-import { useAuthStore } from './stores/authStore';
+import { isTokenExpired } from './utils/manageToken';
 import Layout from './components/layout/Layout';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -37,9 +37,9 @@ const App: React.FC = () => {
 };
 
 const PrivateRoute: React.FC = () => {
-  const user = useAuthStore((state) => state.user);
+  const tokenSession = isTokenExpired(localStorage.getItem("token"));
 
-  return user ? <Outlet /> : <Navigate to="/login" />;
+  return !tokenSession ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default App;

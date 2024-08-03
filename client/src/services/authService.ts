@@ -1,3 +1,4 @@
+import { getToken, isTokenExpired, removeToken, setToken } from '../utils/manageToken';
 
 export const authService = {
   login: async (email: string, password: string) => {
@@ -14,12 +15,12 @@ export const authService = {
     }
 
     const data = await response.json();
-    localStorage.setItem('user', JSON.stringify(data));
+    setToken(data.token); // Store the token using the utility function
     return data;
   },
 
   logout: () => {
-    localStorage.removeItem('user');
+    removeToken(); // Remove the token using the utility function
   },
 
   register: async (email: string, password: string) => {
@@ -36,12 +37,17 @@ export const authService = {
     }
 
     const data = await response.json();
-    localStorage.setItem('user', JSON.stringify(data));
+    setToken(data.token); // Store the token using the utility function
     return data;
   },
 
   getToken: () => {
-    const user = JSON.parse(localStorage.getItem('user') || 'null');
-    return user?.token;
+    return getToken(); // Retrieve the token using the utility function
+  },
+
+  isAuthenticated: () => {
+    const token = getToken();
+    if (!token) return false;
+    return !isTokenExpired(token); // Check token validity
   },
 };

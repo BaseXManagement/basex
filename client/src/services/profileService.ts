@@ -31,11 +31,12 @@ const getAuthHeaders = () => {
 };
 
 export const profileService = {
-  getProfile: async (userId: string): Promise<Profile> => {
+  getProfile: async (): Promise<Profile> => {
     const response = await fetch(`${API_URL}/profile`, {
       method: 'GET',
       headers: getAuthHeaders(),
     });
+
     if (!response.ok) {
       throw new Error('Failed to fetch profile');
     }

@@ -1,14 +1,32 @@
 import React from 'react';
 import { Container, Typography, Box, Grid, Paper, Avatar, Button } from '@mui/material';
-import { useProfile } from '../../../hooks/useProfile';
 import { useAuthStore } from '../../../stores/authStore';
+import { useProfile } from '../../../hooks/useProfile';
 import { useNavigate } from 'react-router-dom';
+import {jwtDecode} from 'jwt-decode';
+
+interface JwtPayload {
+  id: string;
+}
 
 const ProfileDetails: React.FC = () => {
-  const user = useAuthStore((state) => state.user);
-  const { profile } = useProfile(user.id);
+  const token = useAuthStore((state) => state.token);
   const navigate = useNavigate();
 
+  // Early return if there's no token
+  if (!token) {
+    navigate('/login');
+    return null;
+  }
+
+  // Decode the token to get the user ID
+  const decodedToken = jwtDecode<JwtPayload>(token);
+  const userId = decodedToken.id;
+
+  // Call useProfile hook outside of any conditional logic
+  const { profile } = useProfile(userId);
+
+  // Handle the case where the profile is still loading or not found
   if (!profile) {
     return <div>Loading...</div>;
   }

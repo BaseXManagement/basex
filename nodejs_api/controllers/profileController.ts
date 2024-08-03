@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import Profile from '../models/Profile';
 import { AuthRequest } from '../middlewares/authMiddleware';
 
@@ -13,7 +13,7 @@ const getProfile = async (req: AuthRequest, res: Response) => {
 };
 
 const updateProfile = async (req: AuthRequest, res: Response) => {
-  const profile = await Profile.findOne({ userId: req.user?._id });
+  const profile = await Profile.findOne({ userId: req.body.userId });
 
   if (profile) {
     Object.assign(profile, req.body);

@@ -3,7 +3,9 @@ import { Request, Response, NextFunction } from 'express';
 import User, { IUser } from '../models/User';
 
 export interface AuthRequest extends Request {
+  [x: string]: any;
   user?: IUser;
+  token?: string;
 }
 
 const protect = async (req: AuthRequest, res: Response, next: NextFunction) => {

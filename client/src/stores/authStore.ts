@@ -1,25 +1,43 @@
-import {create} from 'zustand';
+import { create } from 'zustand';
 import { authService } from '../services/authService';
 
 interface AuthState {
-  user: any;
+  token: string | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   register: (email: string, password: string) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-  user: JSON.parse(localStorage.getItem('user') || 'null'),
-  login: async (email, password) => {
-    const user = await authService.login(email, password);
-    set({ user });
+  token: localStorage.getItem('token'), // Initialize token from local storage
+
+  login: async (email: string, password: string) => {
+    try {
+      const { token } = await authService.login(email, password);
+      set({ token });
+      localStorage.setItem('token', token); // Store the token in local storage
+    } catch (error) {
+      console.error('Login failed:', error);
+      set({ token: null });
+      localStorage.removeItem('token');
+    }
   },
+
   logout: () => {
     authService.logout();
-    set({ user: null });
+    set({ token: null });
+    localStorage.removeItem('token');
   },
-  register: async (email, password) => {
-    const user = await authService.register(email, password);
-    set({ user });
+
+  register: async (email: string, password: string) => {
+    try {
+      const { token } = await authService.register(email, password);
+      set({ token });
+      localStorage.setItem('token', token); // Store the token in local storage
+    } catch (error) {
+      console.error('Registration failed:', error);
+      set({ token: null });
+      localStorage.removeItem('token');
+    }
   },
 }));

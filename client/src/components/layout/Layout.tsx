@@ -1,10 +1,12 @@
 import React from 'react';
 import { Box, CssBaseline } from '@mui/material';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import TopBar from './TopBar';
 import Sidebar from './Sidebar';
+import { isTokenExpired } from '../../utils/manageToken';
 
 const Layout: React.FC = () => {
+  const tokenSession = isTokenExpired(localStorage.getItem("token"));
   const location = useLocation();
   const titles: { [key: string]: string } = {
     '/dashboard': 'Dashboard',
@@ -20,7 +22,7 @@ const Layout: React.FC = () => {
   const title = titles[location.pathname] || 'Home';
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+    !tokenSession ? <Box sx={{ display: 'flex', minHeight: '100vh' }}>
       <CssBaseline />
       <Sidebar />
       <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
@@ -32,7 +34,7 @@ const Layout: React.FC = () => {
           <Outlet />
         </Box>
       </Box>
-    </Box>
+    </Box> : <Navigate to="/login" />
   );
 };
 
