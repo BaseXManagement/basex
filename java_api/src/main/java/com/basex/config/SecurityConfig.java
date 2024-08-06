@@ -1,28 +1,29 @@
 package com.basex.config;
 
 
+import com.basex.security.jwt.AuthEntryPointJwt;
+import com.basex.security.jwt.AuthTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.sql.DataSource;
-
 import java.sql.SQLException;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -32,45 +33,85 @@ public class SecurityConfig {
     @Autowired
     DataSource dataSource;
 
-    @Bean
-    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((requests) -> requests.anyRequest().authenticated());
-        http.sessionManagement(session
-                -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http.httpBasic(withDefaults()); // For Basic Auth
-        http.csrf(AbstractHttpConfigurer::disable);
-        // http.formLogin(withDefaults()); // Uncomment this if you need form-based login
+    @Autowired
+    private AuthEntryPointJwt unauthorizedHandler;
 
-        return http.build();
+    @Bean
+    public AuthTokenFilter authenticationJwtTokenFilter() {
+        return new AuthTokenFilter();
     }
 
     @Bean
-    public UserDetailsService userDetailsService() throws SQLException {
+    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(authorizeRequests ->
+                authorizeRequests
+                        .requestMatchers("/signin").permitAll()
+                        .anyRequest().authenticated());
 
-        UserDetails user1 = User
-                .withUsername("user1")
-                .password("{noop}a")
-                .roles("USER")
-                .build();
+        http.sessionManagement(
+                session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        UserDetails admin = User
-                .withUsername("admin")
-                .password(passwordEncoder().encode("password1"))
-                .roles("ADMIN")
-                .build();
+        http.exceptionHandling(
+                exception -> exception.authenticationEntryPoint(unauthorizedHandler));
 
-        JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager();
-        userDetailsManager.setDataSource(dataSource);
+//        //TODO: Check if this can be deleted as this is for H2 console (video: 1:00:30)
+//        http.headers(
+//                headers -> headers
+//                        .frameOptions(frameOptions -> frameOptions.sameOrigin()));
 
-        userDetailsManager.createUser(user1);
-        userDetailsManager.createUser(admin);
-        return userDetailsManager;
+        //TODO: check if this can be removced when going live
+        http.csrf(csrf -> csrf.disable());
 
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+
+//
+//        http.authorizeHttpRequests((requests) -> requests.anyRequest().authenticated());
+//        http.sessionManagement(session
+//                -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+//        http.httpBasic(withDefaults()); // For Basic Auth
+//        http.csrf(AbstractHttpConfigurer::disable);
+//        // http.formLogin(withDefaults()); // Uncomment this if you need form-based login
+//
+//        return http.build();
+    }
+
+
+    @Bean
+    public UserDetailsService userDetailsService(DataSource dataSource) {
+        return new JdbcUserDetailsManager(dataSource);
+    }
+
+    @Bean
+    public CommandLineRunner initData(UserDetailsService userDetailsService) {
+        return args -> {
+            JdbcUserDetailsManager manager = (JdbcUserDetailsManager) userDetailsService;
+            UserDetails user1 = User
+                    .withUsername("user1")
+                    .password(passwordEncoder().encode("password1"))
+                    .roles("USER")
+                    .build();
+
+            UserDetails admin = User
+                    .withUsername("admin")
+                    .password(passwordEncoder().encode("password1"))
+                    .roles("ADMIN")
+                    .build();
+
+            manager.createUser(user1); // Use existing manager bean
+            manager.createUser(admin); // Use existing manager bean
+        };
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration builder) throws Exception {
+        return builder.getAuthenticationManager();
     }
 
 }
