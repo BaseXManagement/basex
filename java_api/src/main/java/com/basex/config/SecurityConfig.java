@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,6 +25,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -54,27 +57,12 @@ public class SecurityConfig {
         http.exceptionHandling(
                 exception -> exception.authenticationEntryPoint(unauthorizedHandler));
 
-//        //TODO: Check if this can be deleted as this is for H2 console (video: 1:00:30)
-//        http.headers(
-//                headers -> headers
-//                        .frameOptions(frameOptions -> frameOptions.sameOrigin()));
-
-        //TODO: check if this can be removced when going live
-        http.csrf(csrf -> csrf.disable());
+        http.csrf(csrf -> csrf
+                .ignoringRequestMatchers( "/signin"));
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-
-//
-//        http.authorizeHttpRequests((requests) -> requests.anyRequest().authenticated());
-//        http.sessionManagement(session
-//                -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-//        http.httpBasic(withDefaults()); // For Basic Auth
-//        http.csrf(AbstractHttpConfigurer::disable);
-//        // http.formLogin(withDefaults()); // Uncomment this if you need form-based login
-//
-//        return http.build();
     }
 
 
@@ -99,8 +87,8 @@ public class SecurityConfig {
                     .roles("ADMIN")
                     .build();
 
-            manager.createUser(user1); // Use existing manager bean
-            manager.createUser(admin); // Use existing manager bean
+            manager.createUser(user1);
+            manager.createUser(admin);
         };
     }
 

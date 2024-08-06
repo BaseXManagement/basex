@@ -71,7 +71,6 @@ public class GreetingsController {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        //TODO check video 54:22 el are diferit paramtrii din method signature: userDetails.getroles, roles, jwtToken
         LoginResponse response = new LoginResponse(jwtToken, userDetails.getUsername(), roles);
 
         return ResponseEntity.ok(response);
