@@ -1,5 +1,7 @@
 package com.basex.security.auth;
 
+import com.basex.exception.UserAlreadyExistsException;
+import com.basex.repository.RoleRepository;
 import com.basex.security.config.JwtService;
 import com.basex.model.Role;
 import com.basex.model.User;
@@ -11,25 +13,38 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final UserRepository repository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterRequest request) throws UserAlreadyExistsException {
+
+        if ( userRepository.findByEmail(request.getEmail()).isPresent()){
+            throw new UserAlreadyExistsException("User already exists");
+        }
+        // A new registered user will always have the granted authority of USER
+        // Fetch the existing "USER" role from the database
+        Role userRole = roleRepository.findByName("USER")
+                .orElseThrow(() -> new RuntimeException("Role USER not found"));
+
         var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
+                .roles(Collections.singletonList(userRole))
                 .build();
 
-        repository.save(user);
+        userRepository.save(user);
 
         var jwtToken = jwtService.generateToken(user);
 
@@ -43,7 +58,7 @@ public class AuthenticationService {
                 request.getEmail(),
                 request.getPassword()));
 
-        var user = repository.findByEmail(request.getEmail())
+        var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new BadCredentialsException("User not found"));
 
         var jwtToken = jwtService.generateToken(user);

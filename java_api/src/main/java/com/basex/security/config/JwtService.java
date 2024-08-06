@@ -78,14 +78,4 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    /*
-    Changed extractAllClaims and getSignIngKey from video at 1:00:07 due to deprecated methods:
-    https://www.youtube.com/watch?v=BVdQ3iuovg0&t=1593s
-
-    Stackoverflow
-    :https://stackoverflow.com/questions/73486900/how-to-fix-parser-is-deprecated-and-setsigningkeyjava-security-key-is-deprec
-     */
-
-
-
 }
