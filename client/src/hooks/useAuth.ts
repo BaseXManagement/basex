@@ -2,17 +2,17 @@ import { useEffect } from 'react';
 import { useAuthStore } from '../stores/authStore';
 
 export const useAuth = () => {
-  const { user, logout } = useAuthStore((state) => ({
-    user: state.user,
+  const { token, logout } = useAuthStore((state) => ({
+    token: state.token,
     logout: state.logout,
   }));
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      useAuthStore.setState({ user: JSON.parse(storedUser) });
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      useAuthStore.setState({ token: JSON.parse(storedToken) });
     }
   }, []);
 
-  return { user, logout };
+  return { token, logout };
 };

@@ -8,7 +8,7 @@ export const useProfile = (userId: string) => {
   }));
 
   useEffect(() => {
-    fetchProfile(userId);
+    fetchProfile();
   }, [userId, fetchProfile]);
 
   return { profile };

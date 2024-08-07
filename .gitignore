@@ -16,3 +16,6 @@ java_api/target
 
 ###Target###
 /java_api/target
+
+###Build###
+/nodejs_api/node_modules
