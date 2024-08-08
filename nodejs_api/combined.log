@@ -1,0 +1,11 @@
+2024-08-08T15:04:47.729Z info: Server running on port 5000
+2024-08-08T15:05:21.745Z info: Server running on port 5000
+2024-08-08T15:05:26.927Z info: ::1 - - [08/Aug/2024:15:05:26 +0000] "OPTIONS /api/profile HTTP/1.1" 204 0 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+2024-08-08T15:05:26.934Z info: ::1 - - [08/Aug/2024:15:05:26 +0000] "OPTIONS /api/profile HTTP/1.1" 204 0 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+2024-08-08T15:05:26.942Z info: ::1 - - [08/Aug/2024:15:05:26 +0000] "GET /api/profile HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+2024-08-08T15:05:26.947Z info: ::1 - - [08/Aug/2024:15:05:26 +0000] "GET /api/profile HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+2024-08-08T15:05:47.571Z info: Server running on port 5000
+2024-08-08T15:05:52.750Z info: ::1 - - [08/Aug/2024:15:05:52 +0000] "OPTIONS /api/profile HTTP/1.1" 204 0 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+2024-08-08T15:05:52.757Z info: ::1 - - [08/Aug/2024:15:05:52 +0000] "OPTIONS /api/profile HTTP/1.1" 204 0 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+2024-08-08T15:05:52.765Z info: ::1 - - [08/Aug/2024:15:05:52 +0000] "GET /api/profile HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+2024-08-08T15:05:52.771Z info: ::1 - - [08/Aug/2024:15:05:52 +0000] "GET /api/profile HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"

@@ -32,11 +32,12 @@ const authUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
+ 
 
   if (user && (await user.matchPassword(password))) {
-    res.json({
-      token: generateToken(user.id.toString()),
-    });
+    const token = generateToken(user.id.toString());
+    res.cookie('authToken', token, {maxAge: 36000, httpOnly: true})
+    res.json({token});
   } else {
     res.status(401).json({ message: 'Invalid email or password' });
   }
