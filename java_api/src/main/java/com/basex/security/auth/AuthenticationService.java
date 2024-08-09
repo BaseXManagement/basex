@@ -38,8 +38,6 @@ public class AuthenticationService {
                 .orElseThrow(() -> new RuntimeException("Role USER not found"));
 
         var user = User.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .roles(Collections.singletonList(userRole))
