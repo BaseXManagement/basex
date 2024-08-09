@@ -10,11 +10,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,7 +47,15 @@ public class AuthenticationService {
 
         userRepository.save(user);
 
-        var jwtToken = jwtService.generateToken(user);
+        List<String> roles = user.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .toList();
+
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("roles", roles);
+        extraClaims.put("user_id", user.getId());
+
+        var jwtToken = jwtService.generateToken(extraClaims, user);
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -61,7 +70,15 @@ public class AuthenticationService {
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new BadCredentialsException("User not found"));
 
-        var jwtToken = jwtService.generateToken(user);
+        List<String> roles = user.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .toList();
+
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("roles", roles);
+        extraClaims.put("user_id", user.getId());
+
+        var jwtToken = jwtService.generateToken(extraClaims, user);
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
