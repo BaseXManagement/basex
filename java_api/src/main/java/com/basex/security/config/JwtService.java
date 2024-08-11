@@ -42,11 +42,12 @@ public class JwtService {
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return Jwts
                 .builder()
+                .header().add("typ", "JWT").and()
                 .claims(extraClaims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
-                .signWith(getSignIngKey(), SignatureAlgorithm.HS256)
+                .signWith(getSignIngKey(), Jwts.SIG.HS256)
                 .compact();
     }
 
