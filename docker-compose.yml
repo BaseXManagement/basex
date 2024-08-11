@@ -1,72 +1,87 @@
 ########################################################################################################################
-#   1) FILE CONFIG - GLOBAL: DATABASE OUTSIDE DOCKER CONTAINER
-# * mvn clean install
+#                                  FILE CONFIG - GLOBAL: DATABASE OUTSIDE DOCKER CONTAINER
 # * `docker-compose up --build -d` (create/start containers)
-# * to perm delete DB we need to delete docker + its volumes: 'docker-compose down -v'
+# * 'docker-compose down -v' (to perm delete DB we need to delete docker + its volumes: )
 ########################################################################################################################
 
 services:
-  java-api:
-    build: .                          # Use Dockerfile to build image
-    image: java-basex-api:latest      # Name of the resulting image
-    container_name: application       # Name of the resulting container
-    ports:                            # External/internal port mapping:
-      - 8080:8080
-    depends_on:                       # Service(s) that this service depends on:
-      basex-api-db:
-          condition: service_healthy
+  ### Java API
+  # java-api:
+  #   build:
+  #     context: ./java_api             # Specify the path to the Java API directory
+  #   image: java-basex-api:latest      # Name of the resulting image
+  #   container_name: java-api          # Name of the resulting container
+  #   ports:                            # External/internal port mapping:
+  #     - 8080:8080
+  #   depends_on:                       # Service(s) that this service depends on:
+  #     java-api-db:
+  #         condition: service_healthy  # Ensure the database is healthy before starting this service
 
+  # java-api-db:
+  #   image: mysql:latest               # Use the official MySQL image
+  #   container_name: java-MySQL        # Name of the MySQL container
+  #   environment:                      # Environment variables for the MySQL container
+  #     - MYSQL_DATABASE=basex          # Set the name of the default database
+  #     - MYSQL_ROOT_PASSWORD=password  # Set the root password
+  #   healthcheck:                      # Command that checks if the MySQL container is healthy
+  #     test: [ "CMD", "echo", "MySQL database container is healthy" ]
+  #   ports:
+  #     - "3306:3306"                   # External/internal port mapping for MySQL
+  #   volumes:
+  #     - mysql_data:/var/lib/mysql     # Volume for MySQL data persistence
+
+  ### NodeJS API
   nodejs-api:
-    build: .                          # Use Dockerfile to build image
+    build:
+      context: ./nodejs_api           # Specify the path to the Node.js API directory
     image: nodejs-basex-api:latest    # Name of the resulting image
     container_name: nodejs-api        # Name of the resulting container
     ports:                            # External/internal port mapping:
       - 5000:5000
     command: npm run dev              # Command to start the application
     depends_on:                       # Service(s) that this service depends on:
-      nodejs-api-db:
-          condition: service_healthy
+      mongo-db:
+          condition: service_healthy  # Ensure the database is healthy before starting this service
 
-  nodejs-api-db:
-    image: mongo:latest               # Image used to create MongoDB container
-    container_name: baseX-mongodb           # Name of the MongoDB container
+  mongo-db:
+    image: mongo:latest               # Use the official MongoDB image
+    container_name: nodejs-db         # Name of the MongoDB container
     environment:                      # Environment variables for MongoDB container
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=admin
-      - MONGO_INITDB_DATABASE=baseX
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: admin
     ports:
       - "27017:27017"                 # External/internal port mapping for MongoDB
     volumes:
       - mongodb_data:/data/db         # Volume for MongoDB data persistence
-    healthcheck:                      # Command that, when ran, proves MongoDB container is healthy
-      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+    healthcheck:                      # Command that checks if the MongoDB container is healthy
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s                   # Adjust the interval to check every 10 seconds
+      timeout: 10s
+      retries: 5                      # Retry 5 times before marking as unhealthy
 
-  basex-api-db:
-    image: mysql:latest               # Image used to create MySQL container for java-api
-    container_name: database-MYSQL
-    environment:                      # Environment variables for the MySQL container
-      - MYSQL_DATABASE=basex
-      - MYSQL_ROOT_PASSWORD=password
-    healthcheck:                      # Command that, when ran, proves MySQL container is healthy
-      test: [ "CMD", "echo", "MySQL database container is healthy" ]
+  ### Frontend (React) Client
+  basex-client:
+    build:
+      context: ./client               # Specify the path to the React frontend directory
+    image: basex-client:latest        # Name of the resulting image
+    container_name: client-basex      # Name of the resulting container
     ports:
-      - "3306:3306"
-    volumes:
-      - db:/var/lib/mysql
+      - 3000:3000                     # External/internal port mapping for the React development server
+    command: npm start                # Command to start the React development server
+    depends_on:                       # Ensure the API is up before starting the frontend
+      - nodejs-api                    # Correct service name (nodejs-api)
 
 volumes:
+  # mysql_data:                       # Volume for MySQL data
   mongodb_data:                       # Volume for MongoDB data
-  db:                                 # Volume for MySQL data
-
 
 ########################################################################################################################
-#   2) FILE CONFIG - GLOBAL: DATABASE CONTAINED IN DOCKER CONTAINER ONLY, and accessed via Docker Cont. only
+#       FILE CONFIG - GLOBAL: DATABASE CONTAINED IN DOCKER CONTAINER ONLY, and accessed via Docker Cont. only
 # * mvn clean install
 # * `docker-compose up --build -d` (create/start containers)
 ########################################################################################################################
 
 #services:
-#
 #  basex-api-app:
 #    build: .                          # Use Dockerfile to build image
 #    image: basex-api:latest           # Name of the resulting image
@@ -89,7 +104,7 @@ volumes:
 #      test: [ "CMD", "echo", "MySQL database container is healthy" ]
 #    networks:
 #      - network
-#
+
 #networks:
 #  network:
 #    driver: bridge

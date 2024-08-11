@@ -8,15 +8,10 @@ nodejs_api/node_modules
 # production
 client/build
 java_api/target
+nodejs_api/build
 
 ### VS Code ###
 .vscode/
 
 ### Mac OS ###
 .DS_Store
-
-###Target###
-/java_api/target
-
-###Build###
-/nodejs_api/build

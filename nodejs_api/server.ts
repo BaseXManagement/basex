@@ -9,7 +9,6 @@ import authRoutes from './routes/authRoutes';
 import profileRoutes from './routes/profileRoutes';
 
 dotenv.config();
-
 connectDB();
 
 const app: Application = express();
