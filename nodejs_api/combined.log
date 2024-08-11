@@ -9,3 +9,45 @@
 2024-08-08T15:05:52.757Z info: ::1 - - [08/Aug/2024:15:05:52 +0000] "OPTIONS /api/profile HTTP/1.1" 204 0 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
 2024-08-08T15:05:52.765Z info: ::1 - - [08/Aug/2024:15:05:52 +0000] "GET /api/profile HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
 2024-08-08T15:05:52.771Z info: ::1 - - [08/Aug/2024:15:05:52 +0000] "GET /api/profile HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+09/Aug/2024:16:47 Server running on port 5000
+09/Aug/2024:16:48 09/Aug/2024:15:48:28 +0000 "OPTIONS /api/auth/login HTTP/1.1" 204
+09/Aug/2024:16:48 09/Aug/2024:15:48:28 +0000 "POST /api/auth/login HTTP/1.1" 200
+09/Aug/2024:16:48 09/Aug/2024:15:48:28 +0000 "OPTIONS /api/profile HTTP/1.1" 204
+09/Aug/2024:16:48 09/Aug/2024:15:48:28 +0000 "OPTIONS /api/profile HTTP/1.1" 204
+09/Aug/2024:16:48 09/Aug/2024:15:48:28 +0000 "GET /api/profile HTTP/1.1" 304
+09/Aug/2024:16:48 09/Aug/2024:15:48:28 +0000 "GET /api/profile HTTP/1.1" 304
+09/Aug/2024:16:48 09/Aug/2024:15:48:32 +0000 "GET /api/profile HTTP/1.1" 304
+09/Aug/2024:16:48 09/Aug/2024:15:48:32 +0000 "GET /api/profile HTTP/1.1" 304
+09/Aug/2024:16:48 09/Aug/2024:15:48:33 +0000 "GET /api/profile HTTP/1.1" 304
+09/Aug/2024:16:48 09/Aug/2024:15:48:33 +0000 "GET /api/profile HTTP/1.1" 304
+09/Aug/2024:16:49 09/Aug/2024:15:49:00 +0000 "OPTIONS /api/auth/login HTTP/1.1" 204
+09/Aug/2024:16:49 09/Aug/2024:15:49:00 +0000 "POST /api/auth/login HTTP/1.1" 200
+09/Aug/2024:16:49 09/Aug/2024:15:49:00 +0000 "OPTIONS /api/profile HTTP/1.1" 204
+09/Aug/2024:16:49 09/Aug/2024:15:49:00 +0000 "OPTIONS /api/profile HTTP/1.1" 204
+09/Aug/2024:16:49 09/Aug/2024:15:49:00 +0000 "GET /api/profile HTTP/1.1" 304
+09/Aug/2024:16:49 09/Aug/2024:15:49:00 +0000 "GET /api/profile HTTP/1.1" 304
+09/Aug/2024:16:50 09/Aug/2024:15:50:21 +0000 "OPTIONS /api/profile HTTP/1.1" 204
+09/Aug/2024:16:50 09/Aug/2024:15:50:21 +0000 "OPTIONS /api/profile HTTP/1.1" 204
+09/Aug/2024:16:50 09/Aug/2024:15:50:21 +0000 "GET /api/profile HTTP/1.1" 304
+09/Aug/2024:16:50 09/Aug/2024:15:50:21 +0000 "GET /api/profile HTTP/1.1" 304
+09/Aug/2024:16:50 09/Aug/2024:15:50:44 +0000 "OPTIONS /api/auth/login HTTP/1.1" 204
+09/Aug/2024:16:50 09/Aug/2024:15:50:44 +0000 "POST /api/auth/login HTTP/1.1" 200
+09/Aug/2024:16:50 09/Aug/2024:15:50:44 +0000 "OPTIONS /api/profile HTTP/1.1" 204
+09/Aug/2024:16:50 09/Aug/2024:15:50:44 +0000 "OPTIONS /api/profile HTTP/1.1" 204
+09/Aug/2024:16:50 09/Aug/2024:15:50:44 +0000 "GET /api/profile HTTP/1.1" 304
+09/Aug/2024:16:50 09/Aug/2024:15:50:44 +0000 "GET /api/profile HTTP/1.1" 304
+09/Aug/2024:16:50 09/Aug/2024:15:50:56 +0000 "OPTIONS /api/profile HTTP/1.1" 204
+09/Aug/2024:16:50 09/Aug/2024:15:50:56 +0000 "OPTIONS /api/profile HTTP/1.1" 204
+09/Aug/2024:16:50 09/Aug/2024:15:50:56 +0000 "GET /api/profile HTTP/1.1" 304
+09/Aug/2024:16:50 09/Aug/2024:15:50:56 +0000 "GET /api/profile HTTP/1.1" 304
+09/Aug/2024:17:32 Server running on port 5000
+09/Aug/2024:17:32 09/Aug/2024:16:32:26 +0000 "OPTIONS /api/profile HTTP/1.1" 204
+09/Aug/2024:17:32 09/Aug/2024:16:32:27 +0000 "OPTIONS /api/profile HTTP/1.1" 204
+09/Aug/2024:17:32 09/Aug/2024:16:32:27 +0000 "GET /api/profile HTTP/1.1" 304
+09/Aug/2024:17:32 09/Aug/2024:16:32:27 +0000 "GET /api/profile HTTP/1.1" 304
+09/Aug/2024:20:19 09/Aug/2024:19:19:36 +0000 "OPTIONS /api/auth/login HTTP/1.1" 204
+09/Aug/2024:20:19 09/Aug/2024:19:19:36 +0000 "POST /api/auth/login HTTP/1.1" 200
+09/Aug/2024:20:19 09/Aug/2024:19:19:36 +0000 "OPTIONS /api/profile HTTP/1.1" 204
+09/Aug/2024:20:19 09/Aug/2024:19:19:36 +0000 "OPTIONS /api/profile HTTP/1.1" 204
+09/Aug/2024:20:19 09/Aug/2024:19:19:36 +0000 "GET /api/profile HTTP/1.1" 304
+09/Aug/2024:20:19 09/Aug/2024:19:19:36 +0000 "GET /api/profile HTTP/1.1" 304

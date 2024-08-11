@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, IconButton, Menu, MenuItem, Avatar, Tooltip } from '@mui/material';
 import { useAuthStore } from '../../stores/authStore';
-import { jwtDecode } from 'jwt-decode';
 import { useProfile } from '../../hooks/useProfile';
 import { useNavigate } from 'react-router-dom';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
@@ -9,9 +8,6 @@ import PersonIcon from '@mui/icons-material/Person';
 
 interface TopBarProps {
   title: string;
-}
-interface JwtPayload {
-  id: string;
 }
 
 const TopBar: React.FC<TopBarProps> = ({ title }) => {
@@ -21,14 +17,6 @@ const TopBar: React.FC<TopBarProps> = ({ title }) => {
   const navigate = useNavigate();
   let userId: string | null = null;
   const {profile} = useProfile(userId || '');
-
-  const getProfile = () => {
-    // Decode the token to get the user ID
-    if (token) {
-      const decodedToken = jwtDecode<JwtPayload>(token);
-      userId = decodedToken.id;
-    }
-  }
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
