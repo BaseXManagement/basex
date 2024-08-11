@@ -1,5 +1,6 @@
 # dependencies
-/client/node_modules
+client/node_modules
+nodejs_api/node_modules
 /java_api/.idea
 /.pnp
 .pnp.js
@@ -18,4 +19,4 @@ java_api/target
 /java_api/target
 
 ###Build###
-/nodejs_api/node_modules
+/nodejs_api/build

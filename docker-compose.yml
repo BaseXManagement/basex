@@ -6,9 +6,9 @@
 ########################################################################################################################
 
 services:
-  basex-api-app:
+  java-api:
     build: .                          # Use Dockerfile to build image
-    image: basex-api:latest      # Name of the resulting image
+    image: java-basex-api:latest      # Name of the resulting image
     container_name: application       # Name of the resulting container
     ports:                            # External/internal port mapping:
       - 8080:8080
@@ -16,13 +16,38 @@ services:
       basex-api-db:
           condition: service_healthy
 
+  nodejs-api:
+    build: .                          # Use Dockerfile to build image
+    image: nodejs-basex-api:latest    # Name of the resulting image
+    container_name: nodejs-api        # Name of the resulting container
+    ports:                            # External/internal port mapping:
+      - 5000:5000
+    command: npm run dev              # Command to start the application
+    depends_on:                       # Service(s) that this service depends on:
+      nodejs-api-db:
+          condition: service_healthy
+
+  nodejs-api-db:
+    image: mongo:latest               # Image used to create MongoDB container
+    container_name: baseX-mongodb           # Name of the MongoDB container
+    environment:                      # Environment variables for MongoDB container
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+      - MONGO_INITDB_DATABASE=baseX
+    ports:
+      - "27017:27017"                 # External/internal port mapping for MongoDB
+    volumes:
+      - mongodb_data:/data/db         # Volume for MongoDB data persistence
+    healthcheck:                      # Command that, when ran, proves MongoDB container is healthy
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+
   basex-api-db:
-    image: mysql:latest               # Image used to create container (from Docker registry)
-    container_name: database
-    environment:                      # Environment variables for the service (container):
-      - MYSQL_ROOT_PASSWORD=password
+    image: mysql:latest               # Image used to create MySQL container for java-api
+    container_name: database-MYSQL
+    environment:                      # Environment variables for the MySQL container
       - MYSQL_DATABASE=basex
-    healthcheck:                      # Command that, when ran, proves service (container) is healthy
+      - MYSQL_ROOT_PASSWORD=password
+    healthcheck:                      # Command that, when ran, proves MySQL container is healthy
       test: [ "CMD", "echo", "MySQL database container is healthy" ]
     ports:
       - "3306:3306"
@@ -30,7 +55,8 @@ services:
       - db:/var/lib/mysql
 
 volumes:
-  db:                                  # This defines the 'db' volume used by the database container
+  mongodb_data:                       # Volume for MongoDB data
+  db:                                 # Volume for MySQL data
 
 
 ########################################################################################################################
@@ -43,7 +69,7 @@ volumes:
 #
 #  basex-api-app:
 #    build: .                          # Use Dockerfile to build image
-#    image: basex-api:latest      # Name of the resulting image
+#    image: basex-api:latest           # Name of the resulting image
 #    container_name: applicationContainer       # Name of the resulting container
 #    ports:                            # External/internal port mapping:
 #      - 8080:8080
@@ -54,7 +80,7 @@ volumes:
 #      - network
 #
 #  basex-api-db:
-#    image: mysql:latest               # Image used to create container (from Docker registry)
+#    image: mysql:latest               # Image used to create MySQL container
 #    container_name: databaseContainer
 #    environment:                      # Environment variables for the service (container):
 #      - MYSQL_ROOT_PASSWORD=password
