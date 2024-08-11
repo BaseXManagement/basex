@@ -1,7 +1,6 @@
 # dependencies
 client/node_modules
 nodejs_api/node_modules
-/java_api/.idea
 /.pnp
 .pnp.js
 
@@ -9,9 +8,6 @@ nodejs_api/node_modules
 client/build
 java_api/target
 nodejs_api/build
-
-### VS Code ###
-.vscode/
 
 ### Mac OS ###
 .DS_Store

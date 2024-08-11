@@ -9,7 +9,7 @@ const registerUser = async (req: Request, res: Response) => {
   const userExists = await User.findOne({ email });
 
   if (userExists) {
-    return res.status(400).json({ message: 'User already exists' });
+    return res.status(400).json({ message: 'User already exists.' });
   }
 
   const user = new User({ email, password });
@@ -24,7 +24,8 @@ const registerUser = async (req: Request, res: Response) => {
   await profile.save();
 
   res.status(201).json({
-    token: generateToken(user.id.toString()),
+    // token: generateToken(user.id.toString()),
+    message: "User successfully registered."
   });
 };
 
