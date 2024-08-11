@@ -1,6 +1,6 @@
 # Base-X
 
-Base-X is a full-stack application built with React, Node.js, Express, and MongoDB. Frontend is built using React with TypeScript, Material-UI for styling, and Zustand for state management. Backend is built using Node.js, Express, and Mongoose for MongoDB integration. Application includes user authentication, profile management, and various modules like dashboard, timesheet, order placement, delivery, site management, and site reports.
+Base-X is a full-stack application built with React, Node.js, Express, and MongoDB. Frontend is built using React with TypeScript, Material-UI for styling, and Zustand for state management. Backend is built using Node.js, Express, and Mongoose for MongoDB integration and Java with Spring Boot and MySQL as database. Application includes user authentication, profile management, and various modules like dashboard, timesheet, order placement, delivery, site management, and site reports.
 
 ## Table of Contents
 
