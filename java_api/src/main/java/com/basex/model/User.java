@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -45,6 +46,9 @@ public class User implements UserDetails {
                 .collect(Collectors.toList());
     }
 
+    @JdbcTypeCode(Types.BOOLEAN)
+    private boolean isEnabled;
+
     @Override
     public String getPassword() {
         return password;
@@ -72,6 +76,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.isEnabled;
     }
 }
