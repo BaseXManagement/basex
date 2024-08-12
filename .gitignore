@@ -1,6 +1,7 @@
 # dependencies
 client/node_modules
 nodejs_api/node_modules
+java_api/.idea
 /.pnp
 .pnp.js
 
