@@ -6,28 +6,29 @@
 
 services:
 ####################################################### Java API #######################################################
-  # basex-api-app:
-  #   build: .                          # Use Dockerfile to build image
-  #   image: basex-api:latest           # Name of the resulting image
-  #   container_name: application       # Name of the resulting container
-  #   ports:                            # External/internal port mapping:
-  #     - 8080:8080
-  #   depends_on:                       # Service(s) that this service depends on:
-  #     basex-api-db:
-  #       condition: service_healthy
+  basex-api-app:
+    build:
+      context: ./java_api             # Use Dockerfile to build image
+    image: java-basex-api:latest      # Name of the resulting image
+    container_name: java-api          # Name of the resulting container
+    ports:                            # External/internal port mapping:
+      - 8080:8080
+    depends_on:                       # Service(s) that this service depends on:
+      basex-api-db:
+        condition: service_healthy
 
-  # basex-api-db:
-  #   image: mysql:latest               # Image used to create container (from Docker registry)
-  #   container_name: database
-  #   environment:                      # Environment variables for the service (container):
-  #     - MYSQL_ROOT_PASSWORD=password
-  #     - MYSQL_DATABASE=basex
-  #   healthcheck:                      # Command that, when ran, proves service (container) is healthy
-  #     test: [ "CMD", "echo", "MySQL database container is healthy" ]
-  #   ports:
-  #     - "3306:3306"
-  #   volumes:
-  #     - db:/var/lib/mysql
+  basex-api-db:
+    image: mysql:latest               # Image used to create container (from Docker registry)
+    container_name: java-db
+    environment:                      # Environment variables for the service (container):
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=basex
+    healthcheck:                      # Command that, when ran, proves service (container) is healthy
+      test: [ "CMD", "echo", "MySQL database container is healthy" ]
+    ports:
+      - "3306:3306"
+    volumes:
+      - db:/var/lib/mysql
 
 ####################################################### NodeJS API ####################################################
   nodejs-api:
@@ -58,7 +59,7 @@ services:
       timeout: 10s
       retries: 5                      # Retry 5 times before marking as unhealthy
 
-  ### Frontend (React) Client
+  ############################################### Frontend (React) Client #############################################
   basex-client:
     build:
       context: ./client               # Specify the path to the React frontend directory
