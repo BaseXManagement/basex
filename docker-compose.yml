@@ -9,7 +9,7 @@ services:
   basex-api-app:
     build:
       context: ./java_api             # Use Dockerfile to build image
-    image: java-basex-api:latest      # Name of the resulting image
+    image: java-api:latest            # Name of the resulting image
     container_name: java-api          # Name of the resulting container
     ports:                            # External/internal port mapping:
       - 8080:8080
@@ -19,7 +19,7 @@ services:
 
   basex-api-db:
     image: mysql:latest               # Image used to create container (from Docker registry)
-    container_name: java-db
+    container_name: java-data
     environment:                      # Environment variables for the service (container):
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=basex
@@ -28,52 +28,45 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - db:/var/lib/mysql
+      - java_data:/var/lib/java_data
 
 ####################################################### NodeJS API ####################################################
   nodejs-api:
     build:
       context: ./nodejs_api           # Specify the path to the Node.js API directory
-    image: nodejs-basex-api:latest    # Name of the resulting image
+    image: nodejs-api:latest          # Name of the resulting image
     container_name: nodejs-api        # Name of the resulting container
     ports:                            # External/internal port mapping:
       - 5000:5000
-    command: npm run dev              # Command to start the application
-    depends_on:                       # Service(s) that this service depends on:
-      mongo-db:
-          condition: service_healthy  # Ensure the database is healthy before starting this service
+    command: npm run dev              # Command to start the applications
 
-  mongo-db:
+  nodejs-data:
     image: mongo:latest               # Use the official MongoDB image
-    container_name: nodejs-db         # Name of the MongoDB container
+    container_name: nodejs-data       # Name of the MongoDB container
     environment:                      # Environment variables for MongoDB container
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: admin
     ports:
       - "27017:27017"                 # External/internal port mapping for MongoDB
     volumes:
-      - mongodb_data:/data/db         # Volume for MongoDB data persistence
+      - nodejs_data:/data/nodejs_data # Volume for MongoDB data persistence
     healthcheck:                      # Command that checks if the MongoDB container is healthy
-      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
-      interval: 10s                   # Adjust the interval to check every 10 seconds
-      timeout: 10s
-      retries: 5                      # Retry 5 times before marking as unhealthy
+      test: ["CMD-SHELL", "mongo --eval \"db.adminCommand('ping')\" || exit 1"]
+    restart: on-failure               # Restart the container if it fails
 
   ############################################### Frontend (React) Client #############################################
-  basex-client:
+  client:
     build:
       context: ./client               # Specify the path to the React frontend directory
-    image: basex-client:latest        # Name of the resulting image
-    container_name: client-basex      # Name of the resulting container
+    image: client:latest              # Name of the resulting image
+    container_name: client            # Name of the resulting container
     ports:
       - 3000:3000                     # External/internal port mapping for the React development server
     command: npm start                # Command to start the React development server
-    depends_on:                       # Ensure the API is up before starting the frontend
-      - nodejs-api                    # Correct service name (nodejs-api)
 
 volumes:
-  db:                                 # Volume for MySQL data
-  mongodb_data:                       # Volume for MongoDB data
+  java_data:                          # Volume for MySQL data
+  nodejs_data:                        # Volume for MongoDB data
 
 ########################################################################################################################
 #       FILE CONFIG - GLOBAL: DATABASE CONTAINED IN DOCKER CONTAINER ONLY, and accessed via Docker Cont. only
