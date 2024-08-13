@@ -37,10 +37,11 @@ public class AuthenticationService {
         Role userRole = roleRepository.findByName("USER")
                 .orElseThrow(() -> new RuntimeException("Role USER not found"));
 
-        var user = User.builder()
+        User user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .roles(Collections.singletonList(userRole))
+                .isEnabled(false)
                 .build();
 
         userRepository.save(user);
