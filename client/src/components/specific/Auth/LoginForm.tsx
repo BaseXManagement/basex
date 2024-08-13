@@ -1,5 +1,5 @@
-import React from 'react';
-import { TextField, Button, Container, Typography, Box, CssBaseline, Avatar, Grid, Link } from '@mui/material';
+import React, { useState } from 'react';
+import { TextField, Button, Container, Typography, Box, CssBaseline, Avatar, Grid, Link, Alert } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useForm } from '../../../hooks/useForm';
 import { useAuthStore } from '../../../stores/authStore';
@@ -10,19 +10,40 @@ interface LoginFormValues {
   password: string;
 }
 
+const validateLogin = (values: LoginFormValues) => {
+  let errors: Partial<LoginFormValues> = {};
+
+  if (!values.email) {
+    errors.email = 'Email is required';
+  } else if (!/\S+@\S+\.\S+/.test(values.email)) {
+    errors.email = 'Email address is invalid';
+  }
+
+  if (!values.password) {
+    errors.password = 'Password is required';
+  } else if (values.password.length < 4) {
+    errors.password = 'Password must be at least 4 characters';
+  }
+
+  return errors;
+};
+
 const LoginForm: React.FC = () => {
   const { values, errors, handleChange, handleSubmit } = useForm<LoginFormValues>({
     email: '',
     password: '',
-  });
+  }, validateLogin);
+
   const login = useAuthStore((state) => state.login);
   const navigate = useNavigate();
+  const [serverError, setServerError] = useState<string | null>(null);
 
   const onSubmit = async () => {
     try {
       await login(values.email, values.password);
       navigate('/dashboard');
-    } catch (error) {
+    } catch (error: any) {
+      setServerError('Invalid email or password. Please try again.');
       console.error('Login failed:', error);
     }
   };
@@ -44,6 +65,11 @@ const LoginForm: React.FC = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
+        {serverError && (
+          <Alert severity="error" sx={{ width: '100%', mt: 2 }}>
+            {serverError}
+          </Alert>
+        )}
         <Box component="form" onSubmit={(e) => handleSubmit(e, onSubmit)} sx={{ mt: 1 }}>
           <TextField
             margin="normal"
@@ -100,3 +126,4 @@ const LoginForm: React.FC = () => {
 };
 
 export default LoginForm;
+

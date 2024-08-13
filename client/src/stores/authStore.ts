@@ -9,7 +9,7 @@ interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-  token: localStorage.getItem('token'), // Initialize token from local storage
+  token: localStorage.getItem('token'), // Initialize token from local storage 
 
   login: async (email: string, password: string) => {
     try {
@@ -20,6 +20,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       console.error('Login failed:', error);
       set({ token: null });
       localStorage.removeItem('token');
+      throw error;  // Ensure the error is re-thrown so it can be caught in the component
     }
   },
 
@@ -38,6 +39,8 @@ export const useAuthStore = create<AuthState>((set) => ({
       console.error('Registration failed:', error);
       set({ token: null });
       localStorage.removeItem('token');
+      throw error;  // Ensure the error is re-thrown so it can be caught in the component
     }
   },
 }));
+

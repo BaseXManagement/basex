@@ -35,10 +35,24 @@ app.use(morgan(':date[clf] ":method :url HTTP/:http-version" :status', {
   }
 }));
 
-app.use(express.json({ limit: '50mb' })); // Adjust the limit as needed
+app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true })); // For form data
 
-app.use(cors());
+// CORS configuration
+const allowedOrigins = ['http://localhost:3000'];
+const corsOptions = {
+  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, // Allow cookies to be sent with requests
+};
+
+app.use(cors(corsOptions));
+
 app.use(cookieParser());
 app.use(express.json());
 
