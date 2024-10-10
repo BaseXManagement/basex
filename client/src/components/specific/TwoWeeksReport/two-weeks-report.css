@@ -53,14 +53,13 @@
     padding: 1px 10px;
 }
 
-.invoice-meta thead, tbody{
-    background-color: darkgrey;
+.invoice-meta, thead, tbody{
     border-collapse: collapse;
 }
 
 .invoice-client-details{
     width: 400px;
-    background-color: darkgrey;
+    background-color: darkgray;
     padding: 1px 9px;
     border-radius: 2px;
 }

@@ -28,16 +28,16 @@ const TableRow: React.FC<TableRowProps> = ({
     return (
       <tr>
         <td>{day}</td>
-        <td>{jobName}</td>
-        <td>{timeIn}</td>
-        <td>{timeOut}</td>
+        <td className="job-name">{jobName}</td>
+        <td className="time-in">{timeIn}</td>
+        <td className="time-out">{timeOut}</td>
         <td>{hours}</td>
         <td>{overtimeHrs || ''}</td>
-        <td>{totalHours}</td>
+        <td className="total-hours">{totalHours}</td>
         <td>{amount}</td>
         <td>{typeA || ''}</td>
         <td>{typeB || ''}</td>
-        <td>{totalAmount}</td>
+        <td className="total-amount">{totalAmount}</td>
       </tr>
     );
   };

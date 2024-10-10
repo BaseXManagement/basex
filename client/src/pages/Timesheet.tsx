@@ -42,7 +42,7 @@ const Timesheet: React.FC = () => {
 
   return (
       <main>
-        {/* <WeeklyReport /> */}
+        <WeeklyReport />
         <TwoWeeksReport {...invoiceData} />
       </main>
   );

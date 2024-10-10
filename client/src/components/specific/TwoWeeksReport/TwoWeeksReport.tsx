@@ -56,14 +56,14 @@ const TwoWeeksReport: React.FC<InvoiceProps> = ({
         <div className="right-section">
             <div className="invoice-meta">
             <thead>
-                <tr>
+                <tr style={{backgroundColor: "darkgray"}}>
                     <th colSpan={2} style={{textAlign: "left", padding: "2px 5px"}}><strong>INVOICE No: </strong></th>
                     <th>&nbsp; {invoiceNumber} &nbsp;</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td style={{padding: "0px 5px"}}>
+                    <td style={{padding: "0px 5px", backgroundColor: "darkgray"}}>
                         <strong>Date:</strong>  {date}
                     </td>
                     <td></td>
@@ -78,8 +78,8 @@ const TwoWeeksReport: React.FC<InvoiceProps> = ({
             <div className="week-content">
             <div style={{width: "400px"}}>
                 <div className="week-header">
-                    <p><strong>W/Ending:</strong></p>
-                    <p>{week.weekEnding}</p>
+                    <p style={{backgroundColor: "darkgray"}}><strong>W/Ending:</strong></p>
+                    <p style={{backgroundColor: "yellow"}}>{week.weekEnding}</p>
                 </div>
                 <table className="job-table-one">
                     <thead>
@@ -90,7 +90,7 @@ const TwoWeeksReport: React.FC<InvoiceProps> = ({
                     <tbody>
                         {week.jobs.map((job, idx) => (
                         <tr key={idx}>
-                            <td style={{textAlign: "center"}}>{job.jobName}</td>
+                            <td style={{textAlign: "center", backgroundColor: "darkgray"}}>{job.jobName}</td>
                         </tr>
                         ))}
                     </tbody>
@@ -105,7 +105,7 @@ const TwoWeeksReport: React.FC<InvoiceProps> = ({
                 <tbody>
                 {week.jobs.map((job, idx) => (
                     <tr key={idx}>
-                    <td style={{textAlign: "end"}}>£{job.amount.toFixed(2)}</td>
+                    <td style={{textAlign: "end", backgroundColor: "darkgray"}}>£{job.amount.toFixed(2)}</td>
                     </tr>
                 ))}
                 </tbody>
@@ -117,12 +117,12 @@ const TwoWeeksReport: React.FC<InvoiceProps> = ({
         <div style={{display: "flex", justifyContent: "space-between"}}>
             <table className="footer-table">
                 <tbody className="bank-details-table">
-                    <tr style={{ width: "400px" }}>
+                    <tr style={{ width: "400px", backgroundColor: "darkgray"}}>
                         <td style={{width: "30%"}}><strong>Bank Account No:</strong></td>
                         <td style={{backgroundColor: "white", textAlign: "center"}}>{bankAccount}</td>
                     </tr>
                     <tr>
-                        <td style={{width: "30%"}}><strong>Sort code:</strong></td>
+                        <td style={{width: "30%", backgroundColor: "darkgray"}}><strong>Sort code:</strong></td>
                         <td style={{backgroundColor: "white", textAlign: "center"}}>{sortCode}</td>
                     </tr>
                 </tbody>
@@ -131,15 +131,15 @@ const TwoWeeksReport: React.FC<InvoiceProps> = ({
                 <tbody className='totals-table'>
                     <tr>   
                         <td style={{width: "40%", backgroundColor: "white"}}><strong>SUB TOTAL</strong>:</td>
-                        <td style={{textAlign: "end"}}>£{subTotal.toFixed(2)}</td>
+                        <td style={{textAlign: "end", backgroundColor: "darkgray"}}>£{subTotal.toFixed(2)}</td>
                     </tr>
                     <tr>
                         <td style={{width: "40%", backgroundColor: "white"}}><strong>Less -20% Tax</strong>:</td>
-                        <td style={{textAlign: "end"}}>£{tax.toFixed(2)}</td>
+                        <td style={{textAlign: "end", backgroundColor: "darkgray"}}>£{tax.toFixed(2)}</td>
                     </tr>
                     <tr>
                         <td style={{width: "40%", backgroundColor: "white"}}><strong>TOTAL</strong>:</td>
-                        <td style={{textAlign: "end"}}>£{total.toFixed(2)}</td>
+                        <td style={{textAlign: "end", backgroundColor: "darkgray"}}>£{total.toFixed(2)}</td>
                     </tr>
                 </tbody>
             </table>
@@ -147,16 +147,8 @@ const TwoWeeksReport: React.FC<InvoiceProps> = ({
         <table className="footer-table">
             <tbody>
                 <tr style={{ width: "400px" }}>
-                    <td>
-                        <table className="bank-details-table">
-                        <tbody>
-                            <tr>
-                                <td style={{width: "30%"}}><strong>UTR No:</strong></td>
-                                <td style={{backgroundColor: "white", textAlign: "center"}}>{utrNumber}</td>
-                            </tr>
-                        </tbody>
-                        </table>
-                    </td>
+                        <td style={{width: "30%", backgroundColor: "darkgray"}}><strong>UTR No:</strong></td>
+                        <td style={{backgroundColor: "white", textAlign: "center"}}>{utrNumber}</td>
                 </tr>
             </tbody>
         </table>
