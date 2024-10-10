@@ -1,0 +1,164 @@
+.top-section{
+    display: flex;
+    justify-content: center;
+}
+
+.top-section p {
+    margin-right: 80px;
+}
+
+.yellow-banner {
+    background-color: yellow;
+    color: black;
+    width: 100%;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.invoice-container {
+    width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #000;
+    font-family: 'Arial', sans-serif;
+    position: relative;
+    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.3);
+}
+
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.left-section {
+    width: 60%;
+}
+
+.right-section {
+    width: 35%;
+    text-align: right;
+}
+
+.invoice-client-details p, .invoice-meta p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.invoice-meta{
+    width: fit-content;
+    margin-left: 100px;
+    margin-top: 22px;
+    padding: 1px 10px;
+}
+
+.invoice-meta thead, tbody{
+    background-color: darkgrey;
+    border-collapse: collapse;
+}
+
+.invoice-client-details{
+    width: 400px;
+    background-color: darkgrey;
+    padding: 1px 9px;
+    border-radius: 2px;
+}
+
+.week-section {
+    margin-top: 30px;
+}
+
+.week-header {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.week-header p:nth-child(1){
+    width: 30%;
+    background-color: darkgray;
+    padding: 0;
+    margin: 0;
+    height: fit-content;
+}
+
+.week-header p:nth-child(2){
+    width: 70%;
+    text-align: left;
+    background-color: yellow;
+    padding: 0 7px;
+    margin: 0;
+    height: fit-content;
+}
+
+.week-content{
+    display: flex;
+    justify-content: space-between;
+}
+
+.job-table-one, .job-table-two {
+    width: 400px;
+    margin-top: 10px;
+    border-collapse: collapse;
+}
+
+.job-table-two{
+    margin-top: 35px;
+}
+
+.job-table-one th, 
+.job-table-one td,
+.job-table-two th, 
+.job-table-two td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.job-table-one th {
+    background-color: #f1f1f1;
+}
+
+.footer-section {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bank-details {
+    width: 50%;
+    font-size: 14px;
+}
+
+.total-amounts p {
+    margin: 5px 0;
+    font-weight: bold;
+}
+
+.footer-table {
+    width: 400px;
+    margin-top: 40px;
+}
+
+.bank-details-table, .totals-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.bank-details-table td, .totals-table td {
+    padding: 5px;
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.bank-details-table td:first-child, .totals-table td:first-child {
+    font-weight: bold;
+}
+
+  

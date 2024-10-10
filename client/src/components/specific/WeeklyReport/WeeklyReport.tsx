@@ -26,7 +26,7 @@ const WeeklyReport: React.FC = () => {
             <th>Overtime hrs</th>
             <th>Total Hours</th>
             <th>Amount</th>
-            <th colSpan={2}>Type (A or B)</th>
+            <th colSpan={2}>Expense Type (A or B)</th>
             <th>Total Amount</th>
           </tr>
         </thead>
