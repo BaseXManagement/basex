@@ -1,0 +1,168 @@
+body {
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+
+.container {
+    min-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #000;
+}
+
+h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.header {
+    display: block;
+    width: fit-content;
+    font-size: 14px;
+    margin-bottom: 10px;
+    background-color: #d3d3d3;
+    color: black;
+    width: 450px;
+    padding: 1px 10px;
+}
+
+.header > p {
+    padding: 1px;
+    margin: 3px;
+}
+
+.week-ending {
+    width: fit-content;
+    margin: 14px auto;
+    text-align: center;
+    background-color: yellow;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    line-height: 1px;
+    border: 2px solid gray;
+    padding: 2px 7px;
+}
+
+.week-ending > p {
+    margin: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th, table td {
+    border: 1px solid #000;
+    padding: 5px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Set white background for headers */
+table th {
+    background-color: #ffffff;
+    color: black;
+}
+
+/* Apply light gray background to specific columns */
+table td:nth-child(2), /* Job Name */
+table td:nth-child(3), /* Time In */
+table td:nth-child(4), /* Time Out */
+table td:nth-child(7), /* Total Hours */
+table td:nth-child(11) /* Total Amount */ {
+    background-color: #d3d3d3;
+}
+
+.totals-section {
+    display: flex;
+    margin-top: 20px;
+}
+
+.notes-section {
+    width: 45%;
+}
+
+.notes-section label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.notes-section textarea {
+    width: 100%;
+    height: 80px;
+    resize: none;
+    padding: 5px;
+    border: 2px solid lightgray;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
+}
+
+.totals {
+    width: 55%;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 13px;
+    height: fit-content;
+    margin-top: 93px;
+}
+
+.totals div .label, .totals .value {
+    padding: 10px;
+    display: inline;
+}
+
+.totals div .label {
+    background-color: transparent;
+    font-weight: bold;
+}
+
+.totals div .value {
+    background-color: #d3d3d3;
+    font-weight: bold;
+    text-align: center;
+    width: 120px;
+}
+
+.totals .income, .hrs {
+    margin-right: 20px;
+    border: 2px solid lightgray;
+    height: fit-content;
+}
+
+.totals .hrs .label {
+    width: 40px;
+}
+
+.totals .hrs .value {
+    width: 70px;
+    display: inline-block;
+    padding: 2px 20px;
+}
+
+.totals .income .label {
+    width: 40px;
+}
+
+.totals .income .value {
+    width: 80px;
+    display: inline-block;
+    padding: 2px 20px;
+}
+
+.notes {
+    font-size: 12px;
+    margin-top: 20px;
+    line-height: 1.7;
+}
+
+.notes p {
+    margin: 5px 0;
+}

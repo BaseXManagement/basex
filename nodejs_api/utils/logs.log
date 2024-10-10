@@ -260,3 +260,5 @@
 13/Aug/2024:23:00 13/Aug/2024:22:00:48 +0000 "GET /api/profile HTTP/1.1" 304
 13/Aug/2024:23:00 13/Aug/2024:22:00:48 +0000 "GET /api/profile HTTP/1.1" 304
 13/Aug/2024:23:03 Server running on port 5000
+10/Oct/2024:17:52 Server running on port 5000
+10/Oct/2024:17:52 10/Oct/2024:16:52:28 +0000 "OPTIONS /api/auth/login HTTP/1.1" 204

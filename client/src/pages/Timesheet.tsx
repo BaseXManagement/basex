@@ -1,9 +1,10 @@
 import React from 'react';
+import WeeklyReport from '../components/specific/WeeklyReport/WeeklyReport';
 
 const Timesheet: React.FC = () => {
   return (
       <main>
-        <h1>Timesheet</h1>
+        <WeeklyReport />
       </main>
   );
 };
