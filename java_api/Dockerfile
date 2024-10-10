@@ -1,10 +1,10 @@
 FROM openjdk:17-jdk-slim
 
 # Copy the source code to the container
-COPY java_api /app
+COPY . /java_api
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /java_api
 
 # Check if the target folder is missing the JAR and run Maven install if necessary
 RUN if [ ! -f target/backend-1.0-SNAPSHOT.jar ]; then \
@@ -14,8 +14,7 @@ RUN if [ ! -f target/backend-1.0-SNAPSHOT.jar ]; then \
     fi
 
 # Copy the JAR file to the final location
-RUN cp target/backend-1.0-SNAPSHOT.jar /app/app.jar
+RUN cp target/backend-1.0-SNAPSHOT.jar /java_api/app.jar
 
 # Set the entry point to run the application
-ENTRYPOINT ["java","-jar","/app/app.jar"]
-
+ENTRYPOINT ["java","-jar","/java_api/app.jar"]

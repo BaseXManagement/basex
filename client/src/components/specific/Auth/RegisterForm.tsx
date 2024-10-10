@@ -11,18 +11,43 @@ interface RegisterFormValues {
   confirmPassword: string;
 }
 
+const validateRegister = (values: RegisterFormValues) => {
+  let errors: Partial<RegisterFormValues> = {};
+
+  if (!values.email) {
+    errors.email = 'Email is required';
+  } else if (!/\S+@\S+\.\S+/.test(values.email)) {
+    errors.email = 'Email address is invalid';
+  }
+
+  if (!values.password) {
+    errors.password = 'Password is required';
+  } else if (values.password.length < 4) {
+    errors.password = 'Password must be at least 4 characters';
+  }
+
+  if (!values.confirmPassword) {
+    errors.confirmPassword = 'Please confirm your password';
+  } else if (values.confirmPassword !== values.password) {
+    errors.confirmPassword = 'Passwords do not match';
+  }
+
+  return errors;
+};
+
 const RegisterForm: React.FC = () => {
   const { values, errors, handleChange, handleSubmit, setErrors } = useForm<RegisterFormValues>({
     email: '',
     password: '',
     confirmPassword: '',
-  });
+  }, validateRegister);
+
   const register = useAuthStore((state) => state.register);
   const navigate = useNavigate();
 
   const onSubmit = async () => {
-    if (values.password !== values.confirmPassword) {
-      setErrors({ ...errors, confirmPassword: 'Passwords do not match' });
+    if (errors.confirmPassword) {
+      setErrors(errors);
       return;
     }
     try {

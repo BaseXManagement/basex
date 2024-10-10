@@ -41,7 +41,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .roles(Collections.singletonList(userRole))
-                .isEnabled(false)
+                .isEnabled(true)
                 .build();
 
         userRepository.save(user);

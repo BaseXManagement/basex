@@ -8,7 +8,10 @@ interface FormState<T> {
   setErrors: React.Dispatch<React.SetStateAction<Partial<Record<keyof T, string>>>>;
 }
 
-export const useForm = <T extends Record<string, any>>(initialValues: T): FormState<T> => {
+export const useForm = <T extends Record<string, any>>(
+  initialValues: T,
+  validate?: (values: T) => Partial<Record<keyof T, string>>
+): FormState<T> => {
   const [values, setValues] = useState<T>(initialValues);
   const [errors, setErrors] = useState<Partial<Record<keyof T, string>>>({});
 
@@ -20,7 +23,7 @@ export const useForm = <T extends Record<string, any>>(initialValues: T): FormSt
     });
   };
 
-  const validate = () => {
+  const defaultValidate = () => {
     const newErrors: Partial<Record<keyof T, string>> = {};
     (Object.keys(values) as (keyof T)[]).forEach((key) => {
       if (!values[key]) {
@@ -32,11 +35,11 @@ export const useForm = <T extends Record<string, any>>(initialValues: T): FormSt
 
   const handleSubmit = (event: FormEvent, callback: () => void) => {
     event.preventDefault();
-    const newErrors = validate();
-    if (Object.keys(newErrors).length === 0) {
+    const validationErrors = validate ? validate(values) : defaultValidate();
+    if (Object.keys(validationErrors).length === 0) {
       callback();
     } else {
-      setErrors(newErrors);
+      setErrors(validationErrors);
     }
   };
 
