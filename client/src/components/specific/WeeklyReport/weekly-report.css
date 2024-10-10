@@ -24,7 +24,7 @@ h1 {
     width: fit-content;
     font-size: 14px;
     margin-bottom: 10px;
-    background-color: #d3d3d3;
+    background-color: darkgray;
     color: black;
     width: 450px;
     padding: 1px 10px;
@@ -72,12 +72,12 @@ table th {
 }
 
 /* Apply light gray background to specific columns */
-table td:nth-child(2), /* Job Name */
-table td:nth-child(3), /* Time In */
-table td:nth-child(4), /* Time Out */
-table td:nth-child(7), /* Total Hours */
-table td:nth-child(11) /* Total Amount */ {
-    background-color: #d3d3d3;
+.job-name, /* Job Name */
+.time-in, /* Time In */
+.time-out, /* Time Out */
+.total-hours, /* Total Hours */
+.total-amount /* Total Amount */ {
+    background-color: darkgray;
 }
 
 .totals-section {
@@ -125,7 +125,7 @@ table td:nth-child(11) /* Total Amount */ {
 }
 
 .totals div .value {
-    background-color: #d3d3d3;
+    background-color: darkgray;
     font-weight: bold;
     text-align: center;
     width: 120px;
