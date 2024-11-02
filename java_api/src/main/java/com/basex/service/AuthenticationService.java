@@ -1,8 +1,11 @@
-package com.basex.security.auth;
+package com.basex.service;
 
+import com.basex.dao.auth.AuthenticationRequest;
+import com.basex.dao.auth.AuthenticationResponse;
+import com.basex.dao.auth.RegisterRequest;
 import com.basex.exception.UserAlreadyExistsException;
 import com.basex.repository.RoleRepository;
-import com.basex.security.config.JwtService;
+import com.basex.security.JwtService;
 import com.basex.model.Role;
 import com.basex.model.User;
 import com.basex.repository.UserRepository;
@@ -15,7 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,14 +31,16 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) throws UserAlreadyExistsException {
 
-        if ( userRepository.findByEmail(request.getEmail()).isPresent()){
+        // Check if the user already exists by email
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new UserAlreadyExistsException("User already exists");
         }
-        // A new registered user will always have the granted authority of USER
+
         // Fetch the existing "USER" role from the database
         Role userRole = roleRepository.findByName("USER")
                 .orElseThrow(() -> new RuntimeException("Role USER not found"));
 
+        // Create a new user with the "USER" role and encode the password
         User user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -44,8 +48,10 @@ public class AuthenticationService {
                 .isEnabled(true)
                 .build();
 
+        // Save the user to the database
         userRepository.save(user);
 
+        // Prepare additional claims for the JWT token
         List<String> roles = user.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .toList();
@@ -54,21 +60,26 @@ public class AuthenticationService {
         extraClaims.put("roles", roles);
         extraClaims.put("user_id", user.getId());
 
+        // Generate the JWT token with claims
         var jwtToken = jwtService.generateToken(extraClaims, user);
 
+        // Return the AuthenticationResponse with the token
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        // Authenticate the user using email and password
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 request.getEmail(),
                 request.getPassword()));
 
+        // Fetch the user from the database
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new BadCredentialsException("User not found"));
 
+        // Prepare additional claims for the JWT token
         List<String> roles = user.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .toList();
@@ -77,12 +88,12 @@ public class AuthenticationService {
         extraClaims.put("roles", roles);
         extraClaims.put("user_id", user.getId());
 
+        // Generate the JWT token with claims
         var jwtToken = jwtService.generateToken(extraClaims, user);
 
+        // Return the AuthenticationResponse with the token
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
     }
-
-
 }

@@ -1,8 +1,7 @@
-package com.basex.security.config;
+package com.basex.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,7 +37,6 @@ public class JwtService {
         return generateToken(new HashMap<>(), userDetails);
     }
 
-    //TODO check if this works because it might be deprecated: .signWith(getSignIngKey(), SignatureAlgorithm.HS256)
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return Jwts
                 .builder()
@@ -73,10 +71,8 @@ public class JwtService {
                 .getPayload();
     }
 
-
     private SecretKey getSignIngKey(){
         byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-
 }
