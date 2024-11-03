@@ -1,10 +1,10 @@
 package com.basex.controller;
 
 import com.basex.exception.UserAlreadyExistsException;
-import com.basex.dao.auth.AuthenticationRequest;
-import com.basex.dao.auth.AuthenticationResponse;
+import com.basex.dto.auth.AuthenticationRequest;
+import com.basex.dto.auth.AuthenticationResponse;
 import com.basex.service.AuthenticationService;
-import com.basex.dao.auth.RegisterRequest;
+import com.basex.dto.auth.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

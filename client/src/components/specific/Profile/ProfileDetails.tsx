@@ -7,7 +7,7 @@ import {jwtDecode} from 'jwt-decode';
 import EditIcon from '@mui/icons-material/Edit';
 
 interface JwtPayload {
-  id: string;
+  user_id: string;
 }
 
 interface TabPanelProps {
@@ -45,7 +45,7 @@ const ProfileDetails: React.FC = () => {
   let userId: string | null = null;
   if (token) {
     const decodedToken = jwtDecode<JwtPayload>(token);
-    userId = decodedToken.id;
+    userId = decodedToken.user_id;
   }
 
   // Redirect to login if there's no token

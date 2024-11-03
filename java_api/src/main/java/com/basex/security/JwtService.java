@@ -12,6 +12,7 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
 @Service
@@ -35,6 +36,16 @@ public class JwtService {
     public String generateToken(UserDetails userDetails) {
 
         return generateToken(new HashMap<>(), userDetails);
+    }
+
+    public UUID extractUserId(String token) {
+        // Option 1: Assuming userId is stored as the subject (username)
+//        String userIdString = extractUsername(token);
+
+        // If userId is stored as a claim (instead of subject), use this line instead:
+         String userIdString = extractClaim(token, claims -> claims.get("user_id", String.class));
+
+        return UUID.fromString(userIdString);
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {

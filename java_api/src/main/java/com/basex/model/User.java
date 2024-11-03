@@ -1,5 +1,6 @@
 package com.basex.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -21,14 +22,11 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "_user")
 public class User implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @JdbcTypeCode(Types.VARCHAR)
     private UUID id;
-
     private String email;
-
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade =CascadeType.ALL)
@@ -37,6 +35,7 @@ public class User implements UserDetails {
     private List<Role> roles = new ArrayList<>();
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))

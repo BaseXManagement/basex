@@ -1,9 +1,11 @@
 package com.basex.service;
 
-import com.basex.dao.auth.AuthenticationRequest;
-import com.basex.dao.auth.AuthenticationResponse;
-import com.basex.dao.auth.RegisterRequest;
+import com.basex.dto.auth.AuthenticationRequest;
+import com.basex.dto.auth.AuthenticationResponse;
+import com.basex.dto.auth.RegisterRequest;
 import com.basex.exception.UserAlreadyExistsException;
+import com.basex.model.Profile;
+import com.basex.repository.ProfileRepository;
 import com.basex.repository.RoleRepository;
 import com.basex.security.JwtService;
 import com.basex.model.Role;
@@ -25,6 +27,7 @@ public class AuthenticationService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final ProfileRepository profileRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -49,7 +52,13 @@ public class AuthenticationService {
                 .build();
 
         // Save the user to the database
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        // Create a basic Profile for the new User
+        Profile profile = new Profile();
+        profile.setEmail(request.getEmail()); // Only email is set, other fields are left blank
+        profile.setUser(savedUser);
+        profileRepository.save(profile);
 
         // Prepare additional claims for the JWT token
         List<String> roles = user.getAuthorities().stream()
