@@ -1,4 +1,3 @@
-// src/pages/Timesheet.tsx
 import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import { Link, Outlet } from 'react-router-dom';
@@ -12,9 +11,6 @@ const Timesheet: React.FC = () => {
 
   return (
     <Box sx={{ textAlign: 'center', my: 4 }}>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Welcome, User!
-      </Typography>
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, my: 2 }}>
         <Button component={Link} to="/timesheet/weekly-report" variant="contained" color="primary">
           Weekly Report

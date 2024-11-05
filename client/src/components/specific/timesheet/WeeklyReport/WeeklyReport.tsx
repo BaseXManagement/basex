@@ -2,6 +2,10 @@ import React from 'react';
 import TableRow from './TableRow';
 import './weekly-report.css';
 import { useOutletContext } from 'react-router-dom';
+import { useAuthStore } from '../../../../stores/authStore';
+import { useProfile } from '../../../../hooks/useProfile';
+import { JwtPayload } from '../../Profile/ProfileDetails';
+import { jwtDecode } from 'jwt-decode';
 
 interface WeeklyReportContext {
   weeklyData: Array<iWeeklyDataReport>;
@@ -27,7 +31,15 @@ export interface iWeeklyDataReport {
 
 const WeeklyReport: React.FC = () => {
   const context = useOutletContext<WeeklyReportContext | undefined>();
-  if (!context) {
+  const token = useAuthStore((state) => state.token);
+  let userId: string | null = null;
+  if (token) {
+    const decodedToken = jwtDecode<JwtPayload>(token);
+    userId = decodedToken.user_id;
+  }
+  const { profile } = useProfile(userId || '');
+
+  if (!context || !context.weeklyData) {
     return <div>Error: Weekly data is unavailable.</div>;
   }
 
@@ -39,9 +51,9 @@ const WeeklyReport: React.FC = () => {
   return (
     <div className="container">
       <div className="header">
-        <p><strong>Name:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b> {userInfo.belongTo} </b></p>
-        <p><strong>Address:</strong>&nbsp;&nbsp;&nbsp; 101 Main Street, Camden Town, London, N48NF</p>
-        <p><strong>Email:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mike.brown@gmail.com</p>
+        <p><strong>Name:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b> {profile?.firstName}&nbsp;{profile?.lastName} </b></p>
+        <p><strong>Address:</strong>&nbsp;&nbsp;&nbsp; {profile.address} </p>
+        <p><strong>Email:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {profile.email} </p>
       </div>
 
       <div className="week-ending">

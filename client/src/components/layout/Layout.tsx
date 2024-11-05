@@ -11,6 +11,8 @@ const Layout: React.FC = () => {
   const titles: { [key: string]: string } = {
     '/dashboard': 'Dashboard',
     '/timesheet': 'Timesheet',
+    '/timesheet/payroll-report': 'Payroll Report',
+    '/timesheet/weekly-report': 'Weekly Report',
     '/order-placement': 'Order Placement',
     '/delivery': 'Delivery',
     '/site-management': 'Site Management',

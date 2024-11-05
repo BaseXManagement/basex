@@ -1,6 +1,10 @@
 import React from 'react';
 import './payroll-report.css';
 import { useOutletContext } from 'react-router-dom';
+import { useAuthStore } from '../../../../stores/authStore';
+import { jwtDecode } from 'jwt-decode';
+import { useProfile } from '../../../../hooks/useProfile';
+import { JwtPayload } from '../../Profile/ProfileDetails';
 
 interface PayrollReportContext {
   payrollData: {
@@ -31,6 +35,13 @@ interface WeekData {
 
 const PayrollReport: React.FC = () => {
   const context = useOutletContext<PayrollReportContext | undefined>();
+  const token = useAuthStore((state) => state.token);
+  let userId: string | null = null;
+  if (token) {
+    const decodedToken = jwtDecode<JwtPayload>(token);
+    userId = decodedToken.user_id;
+  }
+  const { profile } = useProfile(userId || '');
 
   if (!context || !context.payrollData) {
     return <div>Error: Payroll data is unavailable.</div>;
@@ -48,9 +59,9 @@ const PayrollReport: React.FC = () => {
       <div className="header-section">
         <div className="left-section">
           <div className="invoice-client-details">
-            <p><strong>Name:</strong> <span style={{ paddingLeft: "25px" }}>{payrollData?.name}</span></p>
-            <p><strong>Address:</strong> {payrollData?.address}</p>
-            <p style={{ marginLeft: "145px" }}>{payrollData?.address.match(/[A-Z]/g)}</p>
+            <p><strong>Name:</strong> <span style={{ paddingLeft: "20px" }}>{profile?.firstName}&nbsp;{profile?.lastName}</span></p>
+            <p><strong>Address:</strong> {profile?.address}, {payrollData?.address.match(/[A-Z]/g)}</p>
+            <p><strong>Email:</strong><span style={{ paddingLeft: "25px" }}>{profile?.email}</span></p>
           </div>
         </div>
         <div className="right-section">
@@ -118,11 +129,11 @@ const PayrollReport: React.FC = () => {
           <tbody className="bank-details-table">
             <tr style={{ width: "400px", backgroundColor: "darkgray" }}>
               <td style={{ width: "30%" }}><strong>Bank Account No:</strong></td>
-              <td style={{ backgroundColor: "white", textAlign: "center" }}>{payrollData.bankAccount}</td>
+              <td style={{ backgroundColor: "white", textAlign: "center" }}>{profile?.bankDetailsAccountNr}</td>
             </tr>
             <tr>
               <td style={{ width: "30%", backgroundColor: "darkgray" }}><strong>Sort code:</strong></td>
-              <td style={{ backgroundColor: "white", textAlign: "center" }}>{payrollData.sortCode}</td>
+              <td style={{ backgroundColor: "white", textAlign: "center" }}>{profile?.bankDetailsBankSortCode?.match(/.{1,2}/g).join("-")}</td>
             </tr>
           </tbody>
         </table>
@@ -147,7 +158,7 @@ const PayrollReport: React.FC = () => {
         <tbody>
           <tr style={{ width: "400px" }}>
             <td style={{ width: "30%", backgroundColor: "darkgray" }}><strong>UTR No:</strong></td>
-            <td style={{ backgroundColor: "white", textAlign: "center" }}>{payrollData.utrNumber}</td>
+            <td style={{ backgroundColor: "white", textAlign: "center" }}>{profile?.utrNo}</td>
           </tr>
         </tbody>
       </table>

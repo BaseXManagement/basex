@@ -1,7 +1,4 @@
-// // src/services/timesheetService.ts
 // import { authService } from './authService';
-
-import { iWeeklyDataReport } from "../components/specific/timesheet/WeeklyReport/WeeklyReport";
 
 // const JAVA_API = process.env.REACT_APP_JAVA_API;
 
@@ -60,7 +57,7 @@ export interface TimesheetData {
     notes?: string;
   };
   payrollData: {
-    invoiceNumber: string;
+    invoiceNumber: number;
     date: string;
     name: string;
     address: string;
@@ -79,7 +76,7 @@ export interface TimesheetData {
 
 // Mock data for testing
 const mockPayrollData = {
-  invoiceNumber: "7",
+  invoiceNumber: 7,
   date: "23-Dec-2021",
   name: "Alan McAllister",
   address: "2 Woodford Road, WD171PA",

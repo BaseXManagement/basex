@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Typography, Box, Grid, Paper, Button, Card, Tabs, Tab, AppBar, IconButton, Fab, Divider } from '@mui/material';
+import { Container, Typography, Box, Paper, Card, Tabs, Tab, AppBar, IconButton, Fab, Divider } from '@mui/material';
 import { useAuthStore } from '../../../stores/authStore';
 import { useProfile } from '../../../hooks/useProfile';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import EditIcon from '@mui/icons-material/Edit';
 
-interface JwtPayload {
+export interface JwtPayload {
   user_id: string;
 }
 
@@ -37,28 +37,24 @@ const TabPanel: React.FC<TabPanelProps> = (props) => {
 }
 
 const ProfileDetails: React.FC = () => {
-  const token = useAuthStore((state) => state.token);
-  const navigate = useNavigate();
   const [value, setValue] = useState(0);
+  const navigate = useNavigate();
+  const token = useAuthStore((state) => state.token);
 
-  // Decode the token to get the user ID
   let userId: string | null = null;
   if (token) {
     const decodedToken = jwtDecode<JwtPayload>(token);
     userId = decodedToken.user_id;
   }
 
-  // Redirect to login if there's no token
   useEffect(() => {
     if (!token) {
       navigate('/login');
     }
   }, [token, navigate]);
 
-  // Always call useProfile, pass a default value if userId is null
   const { profile } = useProfile(userId || '');
 
-  // Handle the case where the profile is still loading or not found
   if (!userId || !profile) {
     return <div>Loading...</div>;
   }
@@ -69,7 +65,6 @@ const ProfileDetails: React.FC = () => {
 
   return (
     <Container component="main" maxWidth="lg">
-      {/* Profile Summary */}
       <Card sx={{ marginTop: 8, padding: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Box>
           <Typography variant="h4">
@@ -86,7 +81,6 @@ const ProfileDetails: React.FC = () => {
         </Box>
       </Card>
 
-      {/* Tabbed Sections */}
       <Box sx={{ width: '100%', marginTop: 4 }}>
         <AppBar position="static" color="default">
           <Tabs value={value} onChange={handleChange} variant="fullWidth">
@@ -130,7 +124,6 @@ const ProfileDetails: React.FC = () => {
         </TabPanel>
       </Box>
 
-      {/* Floating Edit Button */}
       <Fab color="primary" aria-label="edit" sx={{ position: 'fixed', bottom: 16, right: 16 }} onClick={() => navigate('/profile/edit')}>
         <EditIcon />
       </Fab>
