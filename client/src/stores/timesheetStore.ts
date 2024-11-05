@@ -1,20 +1,16 @@
-import create from 'zustand';
-import { timesheetService } from '../services/timesheetService';
+// src/stores/timesheetStore.ts
+import { create } from 'zustand';
+import { timesheetService, TimesheetData } from '../services/timesheetService';
 
 interface TimesheetState {
-  timesheets: any[];
-  addTimesheet: (timesheet: any) => void;
-  fetchTimesheets: () => void;
+  timesheetData: TimesheetData | null;
+  fetchTimesheetData: () => void;
 }
 
 export const useTimesheetStore = create<TimesheetState>((set) => ({
-  timesheets: [],
-  addTimesheet: async (timesheet) => {
-    const newTimesheet = await timesheetService.addTimesheet(timesheet);
-    set((state) => ({ timesheets: [...state.timesheets, newTimesheet] }));
-  },
-  fetchTimesheets: async () => {
-    const timesheets = await timesheetService.getTimesheets();
-    set({ timesheets });
+  timesheetData: null,
+  fetchTimesheetData: async () => {
+    const data = await timesheetService.fetchTimesheetData();
+    set({ timesheetData: data });
   },
 }));

@@ -1,18 +1,6 @@
-interface TableRowProps {
-    day: string;
-    jobName: string;
-    timeIn: string;
-    timeOut: string;
-    hours: number;
-    overtimeHrs: number | null;
-    totalHours: number;
-    amount: string;
-    typeA: string | null;
-    typeB: string | null;
-    totalAmount: string;
-}
+import { iWeeklyDataReport } from "./WeeklyReport";
 
-const TableRow: React.FC<TableRowProps> = ({
+const TableRow: React.FC<iWeeklyDataReport> = ({
     day,
     jobName,
     timeIn,
@@ -37,7 +25,7 @@ const TableRow: React.FC<TableRowProps> = ({
         <td>{amount}</td>
         <td>{typeA || ''}</td>
         <td>{typeB || ''}</td>
-        <td className="total-amount">{totalAmount}</td>
+        <td className="total-amount">£{totalAmount}</td>
       </tr>
     );
   };

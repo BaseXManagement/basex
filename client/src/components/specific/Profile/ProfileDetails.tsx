@@ -3,7 +3,7 @@ import { Container, Typography, Box, Grid, Paper, Button, Card, Tabs, Tab, AppBa
 import { useAuthStore } from '../../../stores/authStore';
 import { useProfile } from '../../../hooks/useProfile';
 import { useNavigate } from 'react-router-dom';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import EditIcon from '@mui/icons-material/Edit';
 
 interface JwtPayload {

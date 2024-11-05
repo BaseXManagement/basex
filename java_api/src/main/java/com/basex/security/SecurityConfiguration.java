@@ -37,7 +37,7 @@ public class SecurityConfiguration {
                 // Define authorization rules
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll() // Allow unauthenticated access to auth endpoints
-                        .requestMatchers("/api/profile").authenticated()
+                        .requestMatchers("/api/profile", "/api/timesheet/*").authenticated()
                         .anyRequest().authenticated() // All other requests require authentication
                 )
 

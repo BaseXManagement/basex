@@ -12,6 +12,8 @@ import OrderPlacement from './pages/OrderPlacement';
 import Delivery from './pages/Delivery';
 import SiteManagement from './pages/SiteManagement';
 import SiteReports from './pages/SiteReports';
+import PayrollReport from './components/specific/timesheet/PayrollReport/PayrollReport';
+import WeeklyReport from './components/specific/timesheet/WeeklyReport/WeeklyReport';
 
 const App: React.FC = () => {
   return (
@@ -25,6 +27,8 @@ const App: React.FC = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/edit" element={<EditProfile />} />
           <Route path="/timesheet" element={<Timesheet />} />
+          <Route path="/timesheet/weekly-report" element={<WeeklyReport />} />
+          <Route path="/timesheet/payroll-report" element={<PayrollReport />} />
           <Route path="/order-placement" element={<OrderPlacement />} />
           <Route path="/delivery" element={<Delivery />} />
           <Route path="/site-management" element={<SiteManagement />} />
