@@ -27,8 +27,6 @@ export interface iWeeklyDataReport {
 
 const WeeklyReport: React.FC = () => {
   const context = useOutletContext<WeeklyReportContext | undefined>();
-
-  console.log("WeeklyReport context:", context); // Log to confirm if data is being received
   if (!context) {
     return <div>Error: Weekly data is unavailable.</div>;
   }

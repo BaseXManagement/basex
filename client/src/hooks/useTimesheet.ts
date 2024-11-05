@@ -1,4 +1,3 @@
-// src/hooks/useTimesheet.ts
 import { useEffect } from 'react';
 import { useTimesheetStore } from '../stores/timesheetStore';
 

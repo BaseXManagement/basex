@@ -10,6 +10,8 @@ body {
     margin: 50px auto;
     padding: 20px;
     border: 1px solid #000;
+    text-align: left;
+    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.3);
 }
 
 h1 {
@@ -65,11 +67,6 @@ table th, table td {
     text-align: center;
 }
 
-/* Set white background for headers */
-table th {
-    background-color: #ffffff;
-    color: black;
-}
 
 /* Apply light gray background to specific columns */
 .job-name, /* Job Name */

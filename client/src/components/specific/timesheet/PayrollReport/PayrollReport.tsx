@@ -32,8 +32,6 @@ interface WeekData {
 const PayrollReport: React.FC = () => {
   const context = useOutletContext<PayrollReportContext | undefined>();
 
-  console.log("PayrollReport context:", context); // Log to check context data in PayrollReport
-
   if (!context || !context.payrollData) {
     return <div>Error: Payroll data is unavailable.</div>;
   }
@@ -59,16 +57,15 @@ const PayrollReport: React.FC = () => {
           <table className="invoice-meta">
             <thead>
               <tr style={{ backgroundColor: "darkgray" }}>
-                <th colSpan={2} style={{ textAlign: "left", padding: "2px 5px" }}><strong>INVOICE No: </strong></th>
+                <th style={{ textAlign: "left", padding: "2px 5px" }}><strong>INVOICE No: </strong></th>
                 <th>&nbsp; {payrollData.invoiceNumber} &nbsp;</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td style={{ padding: "0px 5px", backgroundColor: "darkgray" }}>
+              <tr className="header-date">
+                <td>
                   <strong>Date:</strong> {payrollData.date}
                 </td>
-                <td></td>
               </tr>
             </tbody>
           </table>

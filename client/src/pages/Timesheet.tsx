@@ -6,7 +6,6 @@ import { useTimesheet } from '../hooks/useTimesheet';
 
 const Timesheet: React.FC = () => {
   const { timesheetData } = useTimesheet();
-  console.log(timesheetData)
   if (!timesheetData) {
     return <div>Loading...</div>;
   }

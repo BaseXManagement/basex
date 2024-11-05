@@ -3,6 +3,18 @@
     justify-content: center;
 }
 
+.header-date > td {
+    background-color: darkgray;
+}
+
+.header-date:first-child {
+    border-right: none;
+}
+
+.header-date:nth-child(2) {
+    border-left: none;
+}
+
 .top-section p {
     margin-right: 80px;
 }
@@ -34,6 +46,7 @@
 
 .left-section {
     width: 60%;
+    text-align: left;
 }
 
 .right-section {

@@ -53,7 +53,7 @@ import { iWeeklyDataReport } from "../components/specific/timesheet/WeeklyReport
 // };
 
 export interface TimesheetData {
-  weeklyData: iWeeklyDataReport[];
+  weeklyData: any[];
   userInfo: {
     weekEnding: string;
     belongTo: string;
@@ -219,7 +219,7 @@ export const timesheetService = {
     return {
       weeklyData: mockWeeklyData,
       userInfo: mockUserInfo,
-      payrollData: mockPayrollData,
+      payrollData: mockPayrollData, 
     };
   },
 };
