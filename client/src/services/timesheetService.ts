@@ -75,7 +75,7 @@ export interface TimesheetData {
 }
 
 // Mock data for testing
-const mockPayrollData = {
+let mockPayrollData = {
   invoiceNumber: 7,
   date: "23-Dec-2021",
   name: "Alan McAllister",
@@ -111,12 +111,12 @@ const mockPayrollData = {
   tax: 442,
   total: 1768,
 };
-const mockUserInfo = {
+let mockUserInfo = {
   weekEnding: "28-Jul-24",
   belongTo: "Mike Brown",
   notes: "",
 };
-const mockWeeklyData = [
+let mockWeeklyData = [
   {
     day: "Monday",
     jobName: "Alvarez & Marshal",
@@ -211,12 +211,17 @@ const mockWeeklyData = [
 ];
 
 export const timesheetService = {
+  mockData: {
+    weeklyData: mockWeeklyData,
+    userInfo: mockUserInfo,
+    payrollData: mockPayrollData,
+  },
   fetchTimesheetData: async (): Promise<TimesheetData> => {
-    // Instead of making an API call, return mock data
-    return {
-      weeklyData: mockWeeklyData,
-      userInfo: mockUserInfo,
-      payrollData: mockPayrollData, 
-    };
+    return timesheetService.mockData;
+  },
+  saveTimesheetData: async (updatedWeeklyData: any[]): Promise<void> => {
+    
+    mockWeeklyData = updatedWeeklyData;
+    timesheetService.mockData.weeklyData = updatedWeeklyData;
   },
 };

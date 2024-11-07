@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { Link, Outlet } from 'react-router-dom';
 import { useTimesheet } from '../hooks/useTimesheet';
 

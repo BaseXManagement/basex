@@ -1,33 +1,96 @@
-import { iWeeklyDataReport } from "./WeeklyReport";
+import React from 'react';
+import { iWeeklyDataReport } from './WeeklyReport';
+import './weekly-report.css';
 
-const TableRow: React.FC<iWeeklyDataReport> = ({
-    day,
-    jobName,
-    timeIn,
-    timeOut,
-    hours,
-    overtimeHrs,
-    totalHours,
-    amount,
-    typeA,
-    typeB,
-    totalAmount
-  }) => {
-    return (
-      <tr>
-        <td>{day}</td>
-        <td className="job-name">{jobName}</td>
-        <td className="time-in">{timeIn}</td>
-        <td className="time-out">{timeOut}</td>
-        <td>{hours}</td>
-        <td>{overtimeHrs || ''}</td>
-        <td className="total-hours">{totalHours}</td>
-        <td>{amount}</td>
-        <td>{typeA || ''}</td>
-        <td>{typeB || ''}</td>
-        <td className="total-amount">£{totalAmount}</td>
-      </tr>
-    );
+interface TableRowProps extends iWeeklyDataReport {
+  isEditing: boolean;
+  onFieldChange: (field: keyof iWeeklyDataReport, value: string | number | null) => void;
+}
+
+const TableRow: React.FC<TableRowProps> = ({
+  day,
+  jobName,
+  timeIn,
+  timeOut,
+  hours,
+  overtimeHrs,
+  totalHours,
+  amount,
+  typeA,
+  typeB,
+  totalAmount,
+  isEditing,
+  onFieldChange
+}) => {
+  const handleChange = (field: keyof iWeeklyDataReport, value: string | number | null) => {
+    onFieldChange(field, value);
   };
 
-  export default TableRow;
+  return (
+    <tr>
+      <td>{day}</td>
+      <td className="dark-gray-bg">
+        {isEditing ? (
+          <input
+            className="dark-gray-bg input-width-job-name"
+            value={jobName || ""}
+            onChange={(ev) => handleChange("jobName", ev.target.value)}
+          />
+        ) : (
+          jobName
+        )}
+      </td>
+      <td className="dark-gray-bg input-width">
+        {isEditing ? (
+          <input
+            className="dark-gray-bg input-width-input"
+            value={timeIn || ""}
+            onChange={(ev) => handleChange("timeIn", ev.target.value)}
+          />
+        ) : (
+          timeIn
+        )}
+      </td>
+      <td className="dark-gray-bg input-width">
+        {isEditing ? (
+          <input
+            className="dark-gray-bg input-width-input"
+            value={timeOut || ""}
+            onChange={(ev) => handleChange("timeOut", ev.target.value)}
+          />
+        ) : (
+          timeOut
+        )}
+      </td>
+      <td >
+        {isEditing ? (
+          <input
+            className="input-width-input"
+            value={hours || ""}
+            onChange={(ev) => handleChange("hours", Number(ev.target.value))}
+          />
+        ) : (
+          hours
+        )}
+      </td>
+      <td>
+        {isEditing ? (
+          <input
+            className="input-width-input"
+            value={overtimeHrs || ""}
+            onChange={(ev) => handleChange("overtimeHrs", Number(ev.target.value))}
+          />
+        ) : (
+          overtimeHrs
+        )}
+      </td>
+      <td className="dark-gray-bg">{totalHours}</td>
+      <td>{amount}</td>
+      <td>{typeA}</td>
+      <td>{typeB}</td>
+      <td className="dark-gray-bg">£{totalAmount.toFixed(2)}</td>
+    </tr>
+  );
+};
+
+export default TableRow;

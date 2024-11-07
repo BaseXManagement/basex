@@ -67,6 +67,54 @@ table th, table td {
     text-align: center;
 }
 
+.dark-gray-bg {
+    background-color: darkgray;
+  }
+  
+  .text-center {
+    text-align: center;
+}
+
+.edit-button {
+    background-color: #007bff; /* Blue color */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 8px;
+}
+
+.edit-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.edit-button-container {
+    display: flex;
+    justify-content: flex-end; /* Position button on the right */
+    margin-bottom: 16px; /* Add spacing below the button */
+}
+
+.input-width{
+    max-width: 180px;
+}
+
+.input-width-job-name{
+    max-width: 160px;
+    text-align: center;
+}
+
+.input-width{
+    max-width: 100px;
+    text-align: center;
+}
+
+.input-width-input{
+  max-width: 85px;
+  text-align: center;
+}
 
 /* Apply light gray background to specific columns */
 .job-name, /* Job Name */
