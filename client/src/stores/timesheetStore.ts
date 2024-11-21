@@ -1,20 +1,26 @@
-import create from 'zustand';
-import { timesheetService } from '../services/timesheetService';
+import { create } from 'zustand';
+import { timesheetService, TimesheetData } from '../services/timesheetService';
 
 interface TimesheetState {
-  timesheets: any[];
-  addTimesheet: (timesheet: any) => void;
-  fetchTimesheets: () => void;
+  timesheetData?: TimesheetData | null;
+  fetchTimesheetData: () => void;
+  saveTimesheetData: (updatedWeeklyData: any[]) => Promise<void>;
 }
 
 export const useTimesheetStore = create<TimesheetState>((set) => ({
-  timesheets: [],
-  addTimesheet: async (timesheet) => {
-    const newTimesheet = await timesheetService.addTimesheet(timesheet);
-    set((state) => ({ timesheets: [...state.timesheets, newTimesheet] }));
+  timesheetData: null,
+
+  fetchTimesheetData: async () => {
+    const data: TimesheetData = await timesheetService.fetchTimesheetData();
+    set({ timesheetData: data });
   },
-  fetchTimesheets: async () => {
-    const timesheets = await timesheetService.getTimesheets();
-    set({ timesheets });
+
+  saveTimesheetData: async (updatedWeeklyData: any[]) => {
+    await timesheetService.saveTimesheetData(updatedWeeklyData);
+    set((state) => ({
+      timesheetData: state.timesheetData
+        ? { ...state.timesheetData, weeklyData: updatedWeeklyData }
+        : null,
+    }));
   },
 }));

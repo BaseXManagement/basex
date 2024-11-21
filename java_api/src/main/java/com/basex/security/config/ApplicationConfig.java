@@ -19,7 +19,6 @@ public class ApplicationConfig {
 
     private final UserRepository repository;
 
-    // Bean for userEmail search in the DB for Obj: UserDetailsService with method .loadUserByUsername(userEmail)
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> repository.findByEmail(username)

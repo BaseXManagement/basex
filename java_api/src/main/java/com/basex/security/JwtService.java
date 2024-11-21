@@ -1,8 +1,7 @@
-package com.basex.security.config;
+package com.basex.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +12,7 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
 @Service
@@ -38,7 +38,16 @@ public class JwtService {
         return generateToken(new HashMap<>(), userDetails);
     }
 
-    //TODO check if this works because it might be deprecated: .signWith(getSignIngKey(), SignatureAlgorithm.HS256)
+    public UUID extractUserId(String token) {
+        // Option 1: Assuming userId is stored as the subject (username)
+//        String userIdString = extractUsername(token);
+
+        // If userId is stored as a claim (instead of subject), use this line instead:
+         String userIdString = extractClaim(token, claims -> claims.get("user_id", String.class));
+
+        return UUID.fromString(userIdString);
+    }
+
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return Jwts
                 .builder()
@@ -73,10 +82,8 @@ public class JwtService {
                 .getPayload();
     }
 
-
     private SecretKey getSignIngKey(){
         byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-
 }

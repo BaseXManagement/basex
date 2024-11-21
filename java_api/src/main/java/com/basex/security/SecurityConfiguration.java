@@ -1,10 +1,9 @@
-package com.basex.security.config;
+package com.basex.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,26 +21,30 @@ public class SecurityConfiguration {
     private final AuthenticationProvider authenticationProvider;
 
     @Bean
-    public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
-
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/api/v1/auth/**"));
+                // Disable CSRF for the auth endpoints as we're using JWT
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/api/auth/**")
+                        .disable()
+                )
 
-        http
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                // Set session management to stateless
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
 
-        http
-                .authorizeHttpRequests(req ->
-                        req.
-                                requestMatchers("/api/v1/auth/**").permitAll()
-                                .anyRequest().authenticated());
+                // Define authorization rules
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/**").permitAll() // Allow unauthenticated access to auth endpoints
+                        .requestMatchers("/api/profile", "/api/timesheet/*").authenticated()
+                        .anyRequest().authenticated() // All other requests require authentication
+                )
 
-
-        http
+                // Set the authentication provider and add the JWT filter before the UsernamePasswordAuthenticationFilter
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-
 }

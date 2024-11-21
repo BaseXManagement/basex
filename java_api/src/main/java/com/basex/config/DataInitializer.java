@@ -1,4 +1,4 @@
-package com.basex.datainitializer;
+package com.basex.config;
 
 import com.basex.model.Role;
 import com.basex.repository.RoleRepository;

@@ -1,8 +1,12 @@
 import { getToken, isTokenExpired, removeToken, setToken } from '../utils/manageToken';
 
+const JAVA_API = process.env.REACT_APP_JAVA_API;
+// const NODE_API = process.env.REACT_APP_NODE_API;
+
+
 export const authService = {
   login: async (email: string, password: string) => {
-    const response = await fetch('http://localhost:5000/api/auth/login', { 
+    const response = await fetch(`${JAVA_API}/auth/login`, { 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -15,16 +19,16 @@ export const authService = {
     }
 
     const data = await response.json();
-    setToken(data.token); // Store the token using the utility function
+    setToken(data.token);
     return data;
   },
 
   logout: () => {
-    removeToken(); // Remove the token using the utility function
+    removeToken();
   },
 
   register: async (email: string, password: string) => {
-    const response = await fetch('http://localhost:5000/api/auth/register', {
+    const response = await fetch(`${JAVA_API}/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -37,17 +41,17 @@ export const authService = {
     }
 
     const data = await response.json();
-    setToken(data.token); // Store the token using the utility function
+    setToken(data.token);
     return data;
   },
 
   getToken: () => {
-    return getToken(); // Retrieve the token using the utility function
+    return getToken();
   },
 
   isAuthenticated: () => {
     const token = getToken();
     if (!token) return false;
-    return !isTokenExpired(token); // Check token validity
+    return !isTokenExpired(token);
   },
 };

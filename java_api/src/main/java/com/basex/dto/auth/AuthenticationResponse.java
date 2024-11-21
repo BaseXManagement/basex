@@ -1,4 +1,4 @@
-package com.basex.security.auth;
+package com.basex.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthenticationResponse {
-
     private String token;
-
 }

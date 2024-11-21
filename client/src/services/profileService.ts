@@ -1,6 +1,7 @@
 import { authService } from "./authService";
 
-const API_URL = 'http://localhost:5000/api';
+const JAVA_API = process.env.REACT_APP_JAVA_API;
+// const NODE_API = process.env.REACT_APP_NODE_API;
 
 interface Profile {
   id: string;
@@ -32,7 +33,7 @@ const getAuthHeaders = () => {
 
 export const profileService = {
   getProfile: async (): Promise<Profile> => {
-    const response = await fetch(`${API_URL}/profile`, {
+    const response = await fetch(`${JAVA_API}/profile`, {
       method: 'GET',
       headers: getAuthHeaders(),
     });
@@ -43,7 +44,7 @@ export const profileService = {
     return response.json();
   },
   updateProfile: async (profile: Profile): Promise<Profile> => {
-    const response = await fetch(`${API_URL}/profile`, {
+    const response = await fetch(`${JAVA_API}/profile`, {
       method: 'PUT',
       headers: getAuthHeaders(),
       body: JSON.stringify(profile),

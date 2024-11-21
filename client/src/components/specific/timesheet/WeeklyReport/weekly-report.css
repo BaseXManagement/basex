@@ -10,6 +10,8 @@ body {
     margin: 50px auto;
     padding: 20px;
     border: 1px solid #000;
+    text-align: left;
+    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.3);
 }
 
 h1 {
@@ -24,7 +26,7 @@ h1 {
     width: fit-content;
     font-size: 14px;
     margin-bottom: 10px;
-    background-color: #d3d3d3;
+    background-color: darkgray;
     color: black;
     width: 450px;
     padding: 1px 10px;
@@ -65,19 +67,62 @@ table th, table td {
     text-align: center;
 }
 
-/* Set white background for headers */
-table th {
-    background-color: #ffffff;
-    color: black;
+.dark-gray-bg {
+    background-color: darkgray;
+  }
+  
+  .text-center {
+    text-align: center;
+}
+
+.edit-button {
+    background-color: #007bff; /* Blue color */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 8px;
+}
+
+.edit-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.edit-button-container {
+    display: flex;
+    justify-content: flex-end; /* Position button on the right */
+    margin-bottom: 16px; /* Add spacing below the button */
+}
+
+.input-width{
+    max-width: 180px;
+}
+
+.input-width-job-name{
+    max-width: 160px;
+    text-align: center;
+}
+
+.input-width{
+    max-width: 100px;
+    text-align: center;
+}
+
+.input-width-input{
+  max-width: 85px;
+  text-align: center;
 }
 
 /* Apply light gray background to specific columns */
-table td:nth-child(2), /* Job Name */
-table td:nth-child(3), /* Time In */
-table td:nth-child(4), /* Time Out */
-table td:nth-child(7), /* Total Hours */
-table td:nth-child(11) /* Total Amount */ {
-    background-color: #d3d3d3;
+.job-name, /* Job Name */
+.time-in, /* Time In */
+.time-out, /* Time Out */
+.total-hours, /* Total Hours */
+.total-amount /* Total Amount */ {
+    background-color: darkgray;
 }
 
 .totals-section {
@@ -125,7 +170,7 @@ table td:nth-child(11) /* Total Amount */ {
 }
 
 .totals div .value {
-    background-color: #d3d3d3;
+    background-color: darkgray;
     font-weight: bold;
     text-align: center;
     width: 120px;

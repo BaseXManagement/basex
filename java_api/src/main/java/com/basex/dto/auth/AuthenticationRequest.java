@@ -1,4 +1,4 @@
-package com.basex.security.auth;
+package com.basex.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,5 +12,4 @@ import lombok.NoArgsConstructor;
 public class AuthenticationRequest {
     private String email;
     private String password;
-
 }
